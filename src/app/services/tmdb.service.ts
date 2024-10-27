@@ -1,3 +1,4 @@
+import { TvQueryParams, TvSearch } from './../models/tv';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { config } from '../../environment/config';
@@ -16,7 +17,7 @@ export class TmdbService {
 
   constructor(private http: HttpClient) {}
 
-  getMoviesTEST(): Observable<any> {
+  /* getMoviesTEST(): Observable<any> {
     const params: HttpParams = new HttpParams()
       .set('query', 'skinamarink')
       .set('include_adult', 'false')
@@ -25,14 +26,32 @@ export class TmdbService {
       headers: this.headers,
       params: params,
     });
-  }
+  } */
 
   /**
-   * 
+   *
    * @param paramsObj query (for the name) is required.
    * @returns a result to the search of movies
    */
   searchMovies(paramsObj: MovieQueryParams): Observable<MovieSearch> {
+    let params: HttpParams = this.setParams(paramsObj);
+
+    return this.http.get<MovieSearch>(`${this.apiURL}/search/movie`, {
+      headers: this.headers,
+      params: params,
+    });
+  }
+
+  searchTv(paramsObj: TvQueryParams): Observable<TvSearch> {
+    let params: HttpParams = this.setParams(paramsObj);
+
+    return this.http.get<TvSearch>(`${this.apiURL}/search/movie`, {
+      headers: this.headers,
+      params: params,
+    });
+  }
+
+  private setParams(paramsObj: MovieQueryParams | TvQueryParams): HttpParams {
     let params: HttpParams = new HttpParams();
 
     Object.entries(paramsObj).forEach(([key, value]) => {
@@ -40,10 +59,6 @@ export class TmdbService {
         params = params.set(key, value.toString());
       }
     });
-
-    return this.http.get<MovieSearch>(`${this.apiURL}/search/movie`, {
-      headers: this.headers,
-      params: params,
-    });
+    return params;
   }
 }
