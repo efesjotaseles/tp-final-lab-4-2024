@@ -30,7 +30,7 @@ export class TmdbService {
   /**
    * 
    * @param paramsObj query (for the name) is required.
-   * @returns 
+   * @returns a result to the search of movies
    */
   searchMovies(paramsObj: MovieQueryParams): Observable<MovieSearch> {
     let params: HttpParams = new HttpParams();
