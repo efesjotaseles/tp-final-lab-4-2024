@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { PeliculasComponent } from './components/peliculas/peliculas.component';
 import { HomeComponent } from './components/home/home.component';
 import { SeriesComponent } from './components/series/series.component';
-import { LoginComponent } from './components/login/login.component';
 import { BusquedaComponent } from './components/busqueda/busqueda.component';
+import { LoginComponent } from './auth/login/login.component';
 
 
 const routes: Routes = [
@@ -25,7 +25,7 @@ const routes: Routes = [
     component: SeriesComponent
   },
   {
-    path: 'iniciar-sesion',
+    path: 'login',
     component: LoginComponent
   },
   {

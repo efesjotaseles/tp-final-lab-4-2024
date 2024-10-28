@@ -18,10 +18,10 @@ export class AppComponent {
   };
 
   ngOnInit() {
-    /* this.tmdbService.searchMovies({ query: 'man', page: 15 }).subscribe(
+/*     this.tmdbService.searchMovies({ query: 'man', page: 15 }).subscribe(
       (response) => {
         this.movieSearch = response;
-        console.log(this.movieSearch);
+        console.log(this.movieSearch.results);
       },
       (error) => {
         console.log(error);
