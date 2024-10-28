@@ -1,6 +1,6 @@
 import { Tv, TvQueryParams, TvSearch } from './../models/tv';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { config } from '../../environment/config';
 import { Observable } from 'rxjs';
 import { Movie, MovieQueryParams, MovieSearch } from '../models/movie';
@@ -101,6 +101,4 @@ export class TmdbService {
     });
     return params;
   }
-
-
 }
