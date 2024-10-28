@@ -1,3 +1,5 @@
+import { QueryParams } from "./queryParams";
+
 export interface TvSearch {
   page: number;
   results: TvResult[];
@@ -128,7 +130,7 @@ export interface SpokenLanguage {
  * @param language defaults to en-US
  * @param page defaults to 1
  */
-export interface TvQueryParams {
+export interface TvQueryParams  extends QueryParams{
   query: string;
   first_air_date_year?: number;
   include_adult?: boolean;

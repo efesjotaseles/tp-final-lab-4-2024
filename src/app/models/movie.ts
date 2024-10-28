@@ -1,3 +1,5 @@
+import { QueryParams } from "./queryParams";
+
 export interface MovieSearch {
     page:          number;
     results:       MovieResult[];
@@ -81,7 +83,7 @@ export interface SpokenLanguage {
  * @param language defaults to en-US
  * @param page defaults to 1
  */
-export interface MovieQueryParams {
+export interface MovieQueryParams extends QueryParams{
     query: string,
     include_adult?: boolean,
     language?: string,

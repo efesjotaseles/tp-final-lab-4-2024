@@ -1,9 +1,11 @@
-import { TvQueryParams, TvSearch } from './../models/tv';
+import { Tv, TvQueryParams, TvSearch } from './../models/tv';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { config } from '../../environment/config';
 import { Observable } from 'rxjs';
-import { MovieQueryParams, MovieSearch } from '../models/movie';
+import { Movie, MovieQueryParams, MovieSearch } from '../models/movie';
+import { MultiQueryParams, MultiSearch } from '../models/multi';
+import { QueryParams } from '../models/queryParams';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +18,9 @@ export class TmdbService {
   );
 
   constructor(private http: HttpClient) {}
+
+  //////////////////////////////////////////////////
+  //MOVIE SECTION
 
   /* getMoviesTEST(): Observable<any> {
     const params: HttpParams = new HttpParams()
@@ -42,16 +47,51 @@ export class TmdbService {
     });
   }
 
+  searchMovieById(id: number): Observable<Movie> {
+    return this.http.get<Movie>(`${this.apiURL}/movie/${id}`, {
+      headers: this.headers,
+    });
+  }
+
+  //////////////////////////////////////////////////
+  //TV SECTION
+
+  /**
+   *
+   * @param paramsObj query (for the name) is required.
+   * @returns a result to the search of tv
+   */
   searchTv(paramsObj: TvQueryParams): Observable<TvSearch> {
     let params: HttpParams = this.setParams(paramsObj);
 
-    return this.http.get<TvSearch>(`${this.apiURL}/search/movie`, {
+    return this.http.get<TvSearch>(`${this.apiURL}/search/tv`, {
       headers: this.headers,
       params: params,
     });
   }
 
-  private setParams(paramsObj: MovieQueryParams | TvQueryParams): HttpParams {
+  searchTvById(id: number): Observable<Tv> {
+    return this.http.get<Tv>(`${this.apiURL}/tv/${id}`, {
+      headers: this.headers,
+    });
+  }
+
+  //////////////////////////////////////////////////
+  //MULTI SECTION
+
+  searchMulti(paramsObj: MultiQueryParams): Observable<MultiSearch> {
+    let params: HttpParams = this.setParams(paramsObj);
+
+    return this.http.get<MultiSearch>(`${this.apiURL}/search/multi`, {
+      headers: this.headers,
+      params: params,
+    });
+  }
+
+  //////////////////////////////////////////////////
+  //MISCELANEOUS
+
+  private setParams(paramsObj: QueryParams): HttpParams {
     let params: HttpParams = new HttpParams();
 
     Object.entries(paramsObj).forEach(([key, value]) => {
