@@ -4,8 +4,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'; 
-
 import { TmdbService } from './services/tmdb.service';
 import { HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
@@ -18,9 +16,8 @@ import { HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@an
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
   ],
-  providers: [],
+  providers: [TmdbService ,provideHttpClient(withInterceptorsFromDi())],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
