@@ -1,8 +1,7 @@
-<div class="card" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Movie Title</h5>
-      <p class="card-text">This is the sumary of the movie.</p>
-      <a href="#" class="btn btn-primary">Show full details</a>
-    </div>
+<div class="container">
+  <div>
+    <app-search-bar (resultsEmmiter)="handleSearch($event)"></app-search-bar>
   </div>
+  <hr />
+  <app-movie-result-list [movieResult]="searchResults"></app-movie-result-list>
+</div>

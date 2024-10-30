@@ -4,13 +4,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { TmdbService } from './services/tmdb.service';
-import { HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  HttpClientModule,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { PeliculasComponent } from './components/peliculas/peliculas.component';
 import { SeriesComponent } from './components/series/series.component';
 import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchModule } from './search/search.module';
+import { MovieResultCardComponent } from './components/movie-result-card/movie-result-card.component';
+import { MovieResultListComponent } from './components/movie-result-list/movie-result-list.component';
+import { NgOptimizedImage } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -22,14 +30,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SeriesComponent,
     LoginComponent,
     BusquedaComponent,
+    MovieResultCardComponent,
+    MovieResultListComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    SearchModule,
+    NgOptimizedImage,
   ],
-  providers: [TmdbService ,provideHttpClient(withInterceptorsFromDi())],
-  bootstrap: [AppComponent]
+  providers: [TmdbService, provideHttpClient(withInterceptorsFromDi())],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
