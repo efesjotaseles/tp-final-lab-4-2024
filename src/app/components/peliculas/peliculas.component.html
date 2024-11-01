@@ -1,6 +1,6 @@
 <div class="container">
   <div>
-    <app-search-bar (resultsEmmiter)="handleSearch($event)"></app-search-bar>
+    <app-search-bar (movieQueryParamsEmitter)="handleSearch($event)"></app-search-bar>
   </div>
   <hr />
   <app-movie-result-list [movieResult]="searchResults"></app-movie-result-list>

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MovieResult, MovieSearch } from '../../models/movie';
+import { MovieQueryParams, MovieResult, MovieSearch } from '../../models/movie';
 
 @Component({
   selector: 'app-movie-result-list',
