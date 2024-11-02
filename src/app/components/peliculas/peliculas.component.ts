@@ -16,8 +16,13 @@ export class PeliculasComponent {
     results: [],
   };
 
+  public movieQueryParams: MovieQueryParams = {
+    query: ''
+  }
+
   handleSearch(movieQueryParams: MovieQueryParams) {
-    this.tmdbService.searchMovies(movieQueryParams).subscribe({
+    this.movieQueryParams = movieQueryParams;
+    this.tmdbService.searchMovies(this.movieQueryParams).subscribe({
       next: (response) => {
         this.searchResults = response;
       },
@@ -25,6 +30,15 @@ export class PeliculasComponent {
         console.log(error);
       },
     });
+  }
+
+  handlePageChange(direction: number){
+    let pageRequested: number = this.searchResults.page + direction;
+    if(pageRequested !== 0 && pageRequested <= this.searchResults.total_pages){
+      this.movieQueryParams.page = pageRequested;
+      this.handleSearch(this.movieQueryParams);
+    }
+    console.log(direction);
   }
 
   /**

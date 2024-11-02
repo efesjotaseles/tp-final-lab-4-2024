@@ -19,6 +19,7 @@ import { SearchModule } from './search/search.module';
 import { MovieResultCardComponent } from './components/movie-result-card/movie-result-card.component';
 import { MovieResultListComponent } from './components/movie-result-list/movie-result-list.component';
 import { NgOptimizedImage } from '@angular/common';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { NgOptimizedImage } from '@angular/common';
     BusquedaComponent,
     MovieResultCardComponent,
     MovieResultListComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,

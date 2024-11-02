@@ -1,0 +1,13 @@
+<nav aria-label="...">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <button class="page-link" (click)="handleChange(-1)">&laquo;</button>
+    </li>
+    <li class="page-item">
+      <button class="page-link disabled">{{ currentPage }}</button>
+    </li>
+    <li class="page-item">
+      <button class="page-link" (click)="handleChange(1)">&raquo;</button>
+    </li>
+  </ul>
+</nav>

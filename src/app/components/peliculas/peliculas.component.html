@@ -1,7 +1,21 @@
 <div class="container">
   <div>
-    <app-search-bar (movieQueryParamsEmitter)="handleSearch($event)"></app-search-bar>
+    <app-search-bar
+      (movieQueryParamsEmitter)="handleSearch($event)"
+    ></app-search-bar>
   </div>
   <hr />
-  <app-movie-result-list [movieResult]="searchResults"></app-movie-result-list>
+  <div>
+    @if(searchResults.page !== -1){
+    <app-pagination [currentPage]="searchResults.page" (changePage)="handlePageChange($event)"></app-pagination>}
+  </div>
+  <div>
+    <app-movie-result-list
+      [movieResult]="searchResults"
+    ></app-movie-result-list>
+  </div>
+  <div>
+    @if(searchResults.page !== -1){
+    <app-pagination [currentPage]="searchResults.page" (changePage)="handlePageChange($event)"></app-pagination>}
+  </div>
 </div>
