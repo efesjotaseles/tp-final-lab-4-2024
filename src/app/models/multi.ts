@@ -1,4 +1,4 @@
-import { QueryParams } from "./queryParams";
+import { QueryParams } from './queryParams';
 
 export interface MultiSearch {
   page: number;
@@ -59,8 +59,7 @@ export enum OriginalLanguage {
  * @param page defaults to 1
  */
 export interface MultiQueryParams extends QueryParams {
-  query: string;
-  include_adult?: boolean;
+  /*  include_adult?: boolean;
   language?: string;
-  page?: number;
+  page?: number; */
 }

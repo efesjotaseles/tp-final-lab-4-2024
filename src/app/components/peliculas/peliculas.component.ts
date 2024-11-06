@@ -1,6 +1,11 @@
 import { TmdbService } from './../../services/tmdb.service';
 import { Component } from '@angular/core';
-import { MovieQueryParams, MovieResult, MovieSearch } from '../../models/movie';
+import {
+  MovieQueryParams,
+  MovieResult,
+  MovieSearch,
+  MovieSearchForm,
+} from '../../models/movie';
 
 @Component({
   selector: 'app-peliculas',
@@ -16,27 +21,46 @@ export class PeliculasComponent {
     results: [],
   };
 
-  public movieQueryParams: MovieQueryParams = {
-    query: ''
+  public movieSearchForm: MovieSearchForm = {
+    movieQueryParams: {
+      query: '',
+    },
+  };
+
+  handleSearch(movieSearchForm: MovieSearchForm) {
+    this.movieSearchForm = movieSearchForm;
+    this.tmdbService
+      .searchMovies(this.movieSearchForm.movieQueryParams)
+      .subscribe({
+        next: (response) => {
+          //Filter before...
+          if (
+            movieSearchForm.genre !== null &&
+            movieSearchForm.genre !== undefined
+          ) {
+            //console.log(typeof movieSearchForm.genre);
+            response.results = response.results.filter((result) => {
+              //console.log(result.genre_ids);
+              return result.genre_ids.includes(Number(movieSearchForm.genre!));
+            });
+          }
+          //console.log(response.results);
+          this.searchResults = response;
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
 
-  handleSearch(movieQueryParams: MovieQueryParams) {
-    this.movieQueryParams = movieQueryParams;
-    this.tmdbService.searchMovies(this.movieQueryParams).subscribe({
-      next: (response) => {
-        this.searchResults = response;
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-  }
-
-  handlePageChange(direction: number){
+  handlePageChange(direction: number) {
     let pageRequested: number = this.searchResults.page + direction;
-    if(pageRequested !== 0 && pageRequested <= this.searchResults.total_pages){
-      this.movieQueryParams.page = pageRequested;
-      this.handleSearch(this.movieQueryParams);
+    if (
+      pageRequested !== 0 &&
+      pageRequested <= this.searchResults.total_pages
+    ) {
+      this.movieSearchForm.movieQueryParams.page = pageRequested;
+      this.handleSearch(this.movieSearchForm);
     }
     console.log(direction);
   }

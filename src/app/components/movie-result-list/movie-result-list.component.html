@@ -1,4 +1,4 @@
-@if(movieResult.results.length > 0){
+@if(movieResult.page !== -1){ @if(movieResult.results.length > 0){
 <div class="row">
   @for (result of movieResult.results; track $index) {
   <div class="col-md-4">
@@ -7,5 +7,7 @@
   }
 </div>
 }@else {
+<p>No hay resultados para su búsqueda...</p>
+} }@else {
 <p>Acá van los resultados de la búsqueda...</p>
 }
