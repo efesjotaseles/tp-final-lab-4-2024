@@ -20,6 +20,7 @@ export class PeliculasComponent {
     total_results: -1,
     results: [],
   };
+  public currentPage: number = -1;
 
   public movieSearchForm: MovieSearchForm = {
     movieQueryParams: {
@@ -44,8 +45,9 @@ export class PeliculasComponent {
               return result.genre_ids.includes(Number(movieSearchForm.genre!));
             });
           }
-          //console.log(response.results);
           this.searchResults = response;
+          this.currentPage = this.searchResults.page;
+          console.log(this.searchResults);
         },
         error: (error) => {
           console.log(error);
@@ -53,16 +55,15 @@ export class PeliculasComponent {
       });
   }
 
-  handlePageChange(direction: number) {
-    let pageRequested: number = this.searchResults.page + direction;
+  handlePageChange(requestedPage: number) {
     if (
-      pageRequested !== 0 &&
-      pageRequested <= this.searchResults.total_pages
+      requestedPage !== 0 &&
+      requestedPage <= this.searchResults.total_pages
     ) {
-      this.movieSearchForm.movieQueryParams.page = pageRequested;
+      this.movieSearchForm.movieQueryParams.page = requestedPage;
       this.handleSearch(this.movieSearchForm);
     }
-    console.log(direction);
+    console.log(requestedPage);
   }
 
   /**

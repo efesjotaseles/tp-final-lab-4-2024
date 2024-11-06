@@ -1,6 +1,45 @@
 <nav aria-label="...">
   <ul class="pagination justify-content-center">
     <li class="page-item">
+      <button
+        class="page-link"
+        [ngClass]="{ disabled: currentPage <= 1 }"
+        [disabled]="currentPage - 1 < 1"
+        (click)="previousPage()"
+      >
+        &laquo;
+      </button>
+    </li>
+    @for (page of displayedPages; track $index) { @if (page > 0 && page <= totalPages) {
+    <li class="page-item">
+      <button
+        class="page-link"
+        [ngClass]="{
+          active: page === currentPage
+        }"
+        [disabled]="page === currentPage"
+        (click)="handleChange(page)"
+      >
+        {{ page }}
+      </button>
+    </li>
+    } }
+    <li class="page-item">
+      <button
+        class="page-link"
+        [ngClass]="{ disabled: currentPage + 1 >= totalPages }"
+        [disabled]="currentPage + 1 >= totalPages"
+        (click)="nextPage()"
+      >
+        &raquo;
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<!-- <nav aria-label="...">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
       <button class="page-link" (click)="handleChange(-1)">&laquo;</button>
     </li>
     <li class="page-item">
@@ -10,4 +49,4 @@
       <button class="page-link" (click)="handleChange(1)">&raquo;</button>
     </li>
   </ul>
-</nav>
+</nav> -->

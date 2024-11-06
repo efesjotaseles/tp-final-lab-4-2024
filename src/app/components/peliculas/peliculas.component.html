@@ -7,7 +7,12 @@
   <hr />
   <div>
     @if(searchResults.page !== -1){
-    <app-pagination [currentPage]="searchResults.page" (changePage)="handlePageChange($event)"></app-pagination>}
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="searchResults.total_pages"
+      (changePage)="handlePageChange($event)"
+    ></app-pagination
+    >}
   </div>
   <div>
     <app-movie-result-list
@@ -16,6 +21,11 @@
   </div>
   <div>
     @if(searchResults.page !== -1){
-    <app-pagination [currentPage]="searchResults.page" (changePage)="handlePageChange($event)"></app-pagination>}
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="searchResults.total_pages"
+      (changePage)="handlePageChange($event)"
+    ></app-pagination
+    >}
   </div>
 </div>
