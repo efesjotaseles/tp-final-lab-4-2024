@@ -197,3 +197,8 @@ export interface TvQueryParams extends QueryParams {
   first_air_date_year?: number;
   year?: number;
 }
+
+export interface TvSearchForm {
+  tvQueryParams: TvQueryParams;
+  genre?: TvGenre;
+}

@@ -6,7 +6,7 @@ import { MovieQueryParams, MovieResult, MovieSearch } from '../../models/movie';
   templateUrl: './movie-result-list.component.html',
 })
 export class MovieResultListComponent {
-  @Input() movieResult: MovieSearch = {
+  @Input() movieSearch: MovieSearch = {
     page: -1,
     total_pages: -1,
     total_results: -1,
