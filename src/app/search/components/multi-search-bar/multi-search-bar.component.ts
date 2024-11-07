@@ -3,8 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-multi-search-bar',
   templateUrl: './multi-search-bar.component.html',
-  styleUrl: './multi-search-bar.component.css'
+  styleUrl: './multi-search-bar.component.css',
+  standalone: false,
 })
-export class MultiSearchBarComponent {
-
-}
+export class MultiSearchBarComponent {}

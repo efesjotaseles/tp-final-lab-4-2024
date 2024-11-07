@@ -4,18 +4,17 @@ import { BusquedaService } from '../../services/busqueda.service';
 @Component({
   selector: 'app-busqueda',
   templateUrl: './busqueda.component.html',
-  styleUrls: ['./busqueda.component.css'] // Cambiado a 'styleUrls'
+  styleUrls: ['./busqueda.component.css'], // Cambiado a 'styleUrls'
+  standalone: false,
 })
-export class BusquedaComponent implements OnInit{
-
+export class BusquedaComponent implements OnInit {
   valorBuscado: string = '';
 
-  constructor(private busquedaService: BusquedaService) { }
+  constructor(private busquedaService: BusquedaService) {}
 
   ngOnInit(): void {
-    this.busquedaService.buscado$.subscribe((valor)=>{
+    this.busquedaService.buscado$.subscribe((valor) => {
       this.valorBuscado = valor;
-    })
+    });
   }
-
 }

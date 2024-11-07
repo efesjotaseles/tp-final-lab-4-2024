@@ -4,6 +4,7 @@ import { MovieQueryParams, MovieResult, MovieSearch } from '../../models/movie';
 @Component({
   selector: 'app-movie-result-list',
   templateUrl: './movie-result-list.component.html',
+  standalone: false,
 })
 export class MovieResultListComponent {
   @Input() movieSearch: MovieSearch = {

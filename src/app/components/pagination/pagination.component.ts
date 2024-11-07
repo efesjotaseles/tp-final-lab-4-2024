@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
+  standalone: false,
 })
 export class PaginationComponent {
   @Input() currentPage: number = -1;

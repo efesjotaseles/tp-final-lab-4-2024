@@ -10,6 +10,7 @@ import {
 @Component({
   selector: 'app-peliculas',
   templateUrl: './peliculas.component.html',
+  standalone: false,
 })
 export class PeliculasComponent {
   constructor(private tmdbService: TmdbService) {}

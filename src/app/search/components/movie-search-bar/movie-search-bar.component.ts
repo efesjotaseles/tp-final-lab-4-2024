@@ -15,6 +15,7 @@ import { MovieQueryParams } from '../../../models/movie';
 @Component({
   selector: 'app-movie-search-bar',
   templateUrl: './movie-search-bar.component.html',
+  standalone: false,
 })
 export class MovieSearchBarComponent {
   @Output() public movieSearchFormEmitter: EventEmitter<MovieSearchForm> =

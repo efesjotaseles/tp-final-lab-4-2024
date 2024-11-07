@@ -5,7 +5,8 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl:'./login.component.css'
+  styleUrl: './login.component.css',
+  standalone: false,
 })
 export class LoginComponent {
   username: string = '';
@@ -13,26 +14,26 @@ export class LoginComponent {
   errorMessage: string = '';
   successMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   onLogin() {
     this.authService.login(this.username, this.password).subscribe(
-      isAuthenticated => {
+      (isAuthenticated) => {
         if (isAuthenticated) {
-          this.successMessage = 'Ingreso exitoso'; 
-          this.errorMessage = ''; 
+          this.successMessage = 'Ingreso exitoso';
+          this.errorMessage = '';
           setTimeout(() => {
-            this.router.navigate(['/home']); 
+            this.router.navigate(['/home']);
           }, 1000);
         } else {
           this.errorMessage = 'Usuario o contraseña incorrectos';
-          this.successMessage = ''; 
+          this.successMessage = '';
         }
       },
-      error => {
-        console.error("Error al intentar autenticar:", error);
+      (error) => {
+        console.error('Error al intentar autenticar:', error);
         this.errorMessage = 'Hubo un problema con el inicio de sesión';
-        this.successMessage = ''; 
+        this.successMessage = '';
       }
     );
   }

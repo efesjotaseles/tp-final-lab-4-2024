@@ -15,6 +15,7 @@ import { MovieQueryParams } from '../../../models/movie';
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
+  standalone: false,
 })
 export class SearchBarComponent {
   constructor() {}

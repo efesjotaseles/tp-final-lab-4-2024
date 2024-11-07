@@ -11,14 +11,19 @@ import {
   Validators,
 } from '@angular/forms';
 import { MovieQueryParams } from '../../../models/movie';
-import { TvGenre, tvGenres, TvQueryParams, TvSearchForm } from '../../../models/tv';
+import {
+  TvGenre,
+  tvGenres,
+  TvQueryParams,
+  TvSearchForm,
+} from '../../../models/tv';
 
 @Component({
   selector: 'app-tv-search-bar',
   templateUrl: './tv-search-bar.component.html',
+  standalone: false,
 })
 export class TvSearchBarComponent {
-
   @Output() public tvSearchFormEmitter: EventEmitter<TvSearchForm> =
     new EventEmitter<TvSearchForm>();
 
@@ -70,5 +75,4 @@ export class TvSearchBarComponent {
       this.searchForm.get('first_air_date')?.valid === true
     );
   }
-
 }

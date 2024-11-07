@@ -4,10 +4,11 @@ import { MovieResult } from '../../models/movie';
 @Component({
   selector: 'app-movie-result-card',
   templateUrl: './movie-result-card.component.html',
+  standalone: false,
 })
 export class MovieResultCardComponent {
   public imgBaseUrl: string =
-  'https://media.themoviedb.org/t/p/w600_and_h900_bestv2';
+    'https://media.themoviedb.org/t/p/w600_and_h900_bestv2';
 
   @Input() public movieResult: MovieResult = {
     adult: false,
