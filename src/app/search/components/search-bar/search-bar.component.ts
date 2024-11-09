@@ -20,7 +20,7 @@ import { MovieQueryParams } from '../../../models/movie';
 export class SearchBarComponent {
   constructor() {}
 
-  @Output() public movieQueryParamsEmitter: EventEmitter<MovieSearchForm> =
+  @Output() public movieSearchFormEmitter: EventEmitter<MovieSearchForm> =
     new EventEmitter<MovieSearchForm>();
 
   public genres: MovieGenre[] = movieGenres;
@@ -39,14 +39,14 @@ export class SearchBarComponent {
 
   handleSubmit() {
     if (this.searchForm.valid) {
-      let movieQueryParams: MovieSearchForm = this.formQueryParams();
-      this.movieQueryParamsEmitter.emit(movieQueryParams);
+      let movieSearchForm: MovieSearchForm = this.formSearchForm();
+      this.movieSearchFormEmitter.emit(movieSearchForm);
     } else {
       alert('Datos no válidos!');
     }
   }
 
-  private formQueryParams(): MovieSearchForm {
+  private formSearchForm(): MovieSearchForm {
     let movieQueryParams: MovieQueryParams = {
       query: this.searchForm.value.query,
     };

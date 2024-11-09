@@ -21,6 +21,7 @@ import { MovieResultListComponent } from './components/movie-result-list/movie-r
 import { NgOptimizedImage } from '@angular/common';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { TvResultCardComponent } from './components/tv-result-card/tv-result-card.component';
+import { TvResultListComponent } from './components/tv-result-list/tv-result-list.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { TvResultCardComponent } from './components/tv-result-card/tv-result-car
     MovieResultListComponent,
     PaginationComponent,
     TvResultCardComponent,
+    TvResultListComponent,
   ],
   imports: [
     BrowserModule,

@@ -15,7 +15,7 @@ export class MovieResultCardComponent {
     backdrop_path: null,
     genre_ids: [],
     id: -1,
-    original_language: '',
+    original_language: null,
     original_title: '',
     overview: '',
     popularity: -1,
@@ -26,6 +26,11 @@ export class MovieResultCardComponent {
     vote_average: -1,
     vote_count: -1,
   };
+
+  handleShowFullDetails(){
+    //TODO lógica de visionado de detalles completos
+    alert(this.movieResult.id);
+  }
 
   public movieTitle: string | undefined = this.movieResult?.title;
   public imgURL: string | undefined | null = this.movieResult.poster_path;

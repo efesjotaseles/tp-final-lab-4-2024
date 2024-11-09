@@ -14,7 +14,7 @@ export interface TvResult {
   genre_ids: number[];
   id: number;
   origin_country: string[];
-  original_language: Languages;
+  original_language: null | Languages;
   original_name: string;
   overview: string;
   popularity: number;

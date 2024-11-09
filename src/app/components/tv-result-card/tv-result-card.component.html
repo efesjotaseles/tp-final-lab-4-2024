@@ -1,1 +1,17 @@
-<p>tv-result-card works!</p>
+<div class="card" style="width: 18rem">
+  <img
+    [src]="imgBaseUrl + tvResult.poster_path"
+    class="card-img-top"
+    alt="..."
+  />
+  <div class="card-body">
+    <h5 class="card-title">{{ tvResult.name }}</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">
+      {{ tvResult.first_air_date }}
+    </h6>
+    <p class="card-text">{{ tvResult.overview }}</p>
+    <a class="btn btn-primary" (click)="handleShowFullDetails()"
+      >Show full details</a
+    >
+  </div>
+</div>

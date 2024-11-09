@@ -13,7 +13,7 @@ export interface MovieResult {
   backdrop_path: null | string;
   genre_ids: number[];
   id: number;
-  original_language: string;
+  original_language: null | Languages;
   original_title: string;
   overview: string;
   popularity: number;
@@ -35,7 +35,7 @@ export interface Movie {
   id: number;
   imdb_id: string;
   origin_country: string[];
-  original_language: Languages;
+  original_language: Languages | null;
   original_title: string;
   overview: string;
   popularity: number;

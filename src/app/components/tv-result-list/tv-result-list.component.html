@@ -1,0 +1,13 @@
+@if(tvSearch.page !== -1){ @if(tvSearch.results.length > 0){
+<div class="row">
+  @for (result of tvSearch.results; track $index) {
+  <div class="col-md-4">
+    <app-tv-result-card [tvResult]="result"></app-tv-result-card>
+  </div>
+  }
+</div>
+}@else {
+<p>No hay resultados para su búsqueda...</p>
+} }@else {
+<p>Acá van los resultados de la búsqueda...</p>
+}
