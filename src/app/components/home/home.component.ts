@@ -28,6 +28,7 @@ export class HomeComponent {
     this.tmdbService.searchMulti(this.multiQueryParams).subscribe({
       next: (response) => {
         this.searchResults = response;
+        this.searchResults.results = response.results;
         this.currentPage = this.searchResults.page;
         console.log(this.searchResults);
       },

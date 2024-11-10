@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { MediaType, MultiResult } from '../../models/multi';
 import { MultiConverterService } from '../../services/multi-converter.service';
 import { MovieResult } from '../../models/movie';
@@ -19,8 +19,14 @@ export class MultiResultCardComponent {
     popularity: 0,
   };
 
-  ngOnInit() {
-    switch (this.multiResult.media_type) {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['multiResult'] && changes['multiResult'].currentValue) {
+      this.updateResult(changes['multiResult'].currentValue);
+    }
+  }
+
+  private updateResult(newResult: MultiResult): void {
+    switch (newResult.media_type) {
       case MediaType.Movie:
         this.movieResult = this.convert.toMovieResult(this.multiResult);
         break;
