@@ -1,3 +1,4 @@
+import { Languages } from './Languages';
 import { QueryParams } from './queryParams';
 
 export interface MultiSearch {
@@ -11,7 +12,7 @@ export interface MultiResult {
   id: number;
   name?: string;
   original_name?: string;
-  media_type: MediaType;
+  media_type: null | MediaType;
   adult: boolean;
   popularity: number;
   gender?: number;
@@ -23,13 +24,13 @@ export interface MultiResult {
   original_title?: string;
   overview?: string;
   poster_path?: null | string;
-  original_language?: OriginalLanguage;
+  original_language?: null | Languages;
   genre_ids?: number[];
   release_date?: string;
   video?: boolean;
   vote_average?: number;
   vote_count?: number;
-  first_air_date?: Date;
+  first_air_date?: string;
   origin_country?: string[];
 }
 
@@ -42,13 +43,6 @@ export enum MediaType {
   Movie = 'movie',
   Person = 'person',
   Tv = 'tv',
-}
-
-export enum OriginalLanguage {
-  En = 'en',
-  Fr = 'fr',
-  Nl = 'nl',
-  Zh = 'zh',
 }
 
 //////////////////////////////////////////////////

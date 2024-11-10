@@ -1,8 +1,31 @@
-<div class="card" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Movie/Serie Title</h5>
-      <p class="card-text">This is the sumary of the movie/serie.</p>
-      <a href="#" class="btn btn-primary">Show full details</a>
-    </div>
+<div class="container">
+  <div>
+    <app-multi-search-bar
+      (multiSearchFormEmitter)="handleSearch($event)"
+    ></app-multi-search-bar>
   </div>
+  <hr />
+  <div>
+    @if(searchResults.page !== -1){
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="searchResults.total_pages"
+      (changePage)="handlePageChange($event)"
+    ></app-pagination
+    >}
+  </div>
+  <div>
+    <app-multi-result-list
+      [multiSearch]="searchResults"
+    ></app-multi-result-list>
+  </div>
+  <div>
+    @if(searchResults.page !== -1){
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="searchResults.total_pages"
+      (changePage)="handlePageChange($event)"
+    ></app-pagination
+    >}
+  </div>
+</div>

@@ -1,0 +1,5 @@
+@switch (multiResult.media_type) { @case (mediaType.Movie) {
+<app-movie-result-card [movieResult]="movieResult"></app-movie-result-card>
+} @case (mediaType.Tv) {
+<app-tv-result-card [tvResult]="tvResult"></app-tv-result-card>
+} }

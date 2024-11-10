@@ -1,1 +1,35 @@
-<p>multi-search-bar works!</p>
+<div class="container-fluid">
+    <form
+      class="d-flex"
+      role="search"
+      [formGroup]="searchForm"
+      (ngSubmit)="handleSubmit()"
+    >
+      <input
+        class="form-control me-2"
+        type="search"
+        placeholder="Título"
+        aria-label="Search"
+        formControlName="query"
+      />
+      <!-- <input
+        type="number"
+        placeholder="Año"
+        formControlName="primary_release_year"
+      />
+      <label for="genre">Género:</label>
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        formControlName="genre"
+        id="genre"
+      >
+      <option [ngValue]="null" selected>Cualquier género</option>
+        @for (genre of genres; track $index){
+        <option [value]="genre.id">{{ genre.name }}</option>
+        }
+      </select> -->
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+  

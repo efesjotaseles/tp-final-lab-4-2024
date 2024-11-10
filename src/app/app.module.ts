@@ -22,6 +22,9 @@ import { NgOptimizedImage } from '@angular/common';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { TvResultCardComponent } from './components/tv-result-card/tv-result-card.component';
 import { TvResultListComponent } from './components/tv-result-list/tv-result-list.component';
+import { MultiResultListComponent } from './components/multi-result-list/multi-result-list.component';
+import { MultiConverterService } from './services/multi-converter.service';
+import { MultiResultCardComponent } from './components/multi-result-card/multi-result-card.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,8 @@ import { TvResultListComponent } from './components/tv-result-list/tv-result-lis
     PaginationComponent,
     TvResultCardComponent,
     TvResultListComponent,
+    MultiResultListComponent,
+    MultiResultCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +52,11 @@ import { TvResultListComponent } from './components/tv-result-list/tv-result-lis
     SearchModule,
     NgOptimizedImage,
   ],
-  providers: [TmdbService, provideHttpClient(withInterceptorsFromDi())],
+  providers: [
+    TmdbService,
+    MultiConverterService,
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

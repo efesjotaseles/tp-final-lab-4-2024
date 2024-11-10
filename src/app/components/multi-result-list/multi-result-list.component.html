@@ -1,0 +1,13 @@
+@if(multiSearch.page !== -1){ @if(multiSearch.results.length > 0){
+<div class="row">
+  @for (result of multiSearch.results; track $index) {
+  <div class="col-md-4">
+    <app-multi-result-card [multiResult]="result"></app-multi-result-card>
+  </div>
+  }
+</div>
+}@else {
+<p>No hay resultados para su búsqueda...</p>
+} }@else {
+<p>Acá van los resultados de la búsqueda...</p>
+}
