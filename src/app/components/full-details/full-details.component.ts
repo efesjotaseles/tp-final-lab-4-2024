@@ -1,33 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { TmdbService } from '../../services/tmdb.service';
-import { Movie } from '../../models/movie';
+import { MovieSelectionService } from '../../services/selected-movie.service';
+import { MovieResult } from '../../models/movie';
 
 @Component({
   selector: 'app-full-details',
   templateUrl: './full-details.component.html',
-  styleUrls: ['./full-details.component.css']
 })
 export class FullDetailsComponent implements OnInit {
   public imgBaseUrl: string = 'https://media.themoviedb.org/t/p/w600_and_h900_bestv2';
-  public movieDetails!: Movie;
+  public movieDetails!: MovieResult;
 
-  constructor(
-    private route: ActivatedRoute,
-    private tmdbService: TmdbService
-  ) {}
+  constructor(private movieSelectionService: MovieSelectionService) {}
 
   ngOnInit(): void {
-    const movieId = Number(this.route.snapshot.paramMap.get('id'));
-    if (movieId) {
-      this.tmdbService.searchMovieById(movieId).subscribe((movie) => {
+    this.movieSelectionService.selectedMovie$.subscribe((movie) => {
+      if (movie) {
         this.movieDetails = movie;
-      });
-    }
+      } else {
+        console.error('No hay película seleccionada.');
+      }
+    });
   }
 
-  get genreNames(): string {
-    return this.movieDetails.genres.map(g => g.name).join(', ') || 'N/A';
-  }
-  
 }

@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MovieResult } from '../../models/movie';
+import { MovieSelectionService } from '../../services/selected-movie.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-result-card',
@@ -27,7 +29,19 @@ export class MovieResultCardComponent {
     vote_count: -1,
   };
 
+  constructor(
+    private movieSelectionService: MovieSelectionService,
+    private router: Router
+  ) {}
+
+  showFullDetails(): void {
+    this.movieSelectionService.selectMovie(this.movieResult);
+  }
+
+  // Propiedades adicionales para obtener el título y la URL de la imagen
   public movieTitle: string | undefined = this.movieResult?.title;
-  public imgURL: string | undefined | null = this.movieResult.poster_path;
+  public imgURL: string | undefined | null = this.movieResult.poster_path
+    ? `${this.imgBaseUrl}${this.movieResult.poster_path}`
+    : null;
   public movieOverview: string | undefined = this.movieResult.overview;
 }
