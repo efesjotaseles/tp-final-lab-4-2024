@@ -4,6 +4,7 @@
       <h5 class="card-title">{{movieResult.title}}</h5>
       <h6 class="card-subtitle mb-2 text-body-secondary">{{movieResult.release_date}}</h6>
       <p class="card-text">{{movieResult.overview}}</p>
-      <a href="#" class="btn btn-primary">Show full details</a>
+      <a [routerLink]="['/peliculas', movieResult.id]" class="btn btn-primary">Show full details</a>
+
     </div>
   </div>
