@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-tv-result-card',
   templateUrl: './tv-result-card.component.html',
-  standalone: false,
 })
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 export class TvResultCardComponent {}
 =======
@@ -48,3 +48,8 @@ export class TvResultCardComponent {
   public overview: string | undefined = this.tvResult.overview;
 }
 >>>>>>> Stashed changes
+=======
+export class TvResultCardComponent {
+
+}
+>>>>>>> parent of 12cdac5 (Agragada la propiedad de standalone seteada en false a todos los componentes)
