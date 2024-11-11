@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { SeriesComponent } from './components/series/series.component';
 import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { LoginComponent } from './auth/login/login.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },  
+  {
+    path: 'signup',
+    component: SignUpComponent
   },
   {
     path: 'busqueda',

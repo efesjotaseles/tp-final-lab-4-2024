@@ -14,7 +14,7 @@
             </div>
             <div class="d-flex justify-content-between">
                 <button class="btn btn-primary align-self-center mt-3" type="submit">Iniciar sesión</button>
-                <button class="btn btn-outline-secondary align-self-center mt-3" type="submit">Registrarse</button>
+                <button class="btn btn-outline-secondary align-self-center mt-3" (click)="onRegister()" type="button">Registrarse</button>
             </div>
         </form>
         <div *ngIf="errorMessage" class="alert alert-danger mt-3 text-center">{{ errorMessage }}</div>

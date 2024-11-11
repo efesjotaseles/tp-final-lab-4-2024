@@ -11,6 +11,7 @@ import { PeliculasComponent } from './components/peliculas/peliculas.component';
 import { SeriesComponent } from './components/series/series.component';
 import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +21,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     PeliculasComponent,
     SeriesComponent,
-    LoginComponent,
     BusquedaComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,

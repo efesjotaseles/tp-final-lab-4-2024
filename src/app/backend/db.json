@@ -1,7 +1,40 @@
-{"users": [
+{
+  "users": [
     {
-        "id": 1,
-        "name": "admin",
-        "password": "1234"
+      "id": 1,
+      "username": "admin",
+      "password": "1234",
+      "name": "",
+      "lastname": "",
+      "email": "",
+      "avatar": "",
+      "watchlist": [],
+      "likes": [],
+      "watched": [],
+      "rating": [
+        {
+          "id": "",
+          "movieId": "",
+          "number": ""
+        }
+      ],
+      "comments": [
+        {
+          "id": "",
+          "movieId": "",
+          "text": ""
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "asd",
+      "lastName": "asd",
+      "email": "asd@asd.com",
+      "username": "asd",
+      "password": "asd1",
+      "confirmPassword": "asd1",
+      "terms": true
     }
-]}
+  ]
+}
