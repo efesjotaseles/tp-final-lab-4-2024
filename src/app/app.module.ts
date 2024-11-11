@@ -21,7 +21,16 @@ import { MovieResultListComponent } from './components/movie-result-list/movie-r
 import { NgOptimizedImage } from '@angular/common';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { TvResultCardComponent } from './components/tv-result-card/tv-result-card.component';
+<<<<<<< Updated upstream
 import { FullDetailsComponent } from './components/full-details/full-details.component';
+=======
+import { TvResultListComponent } from './components/tv-result-list/tv-result-list.component';
+import { MultiResultListComponent } from './components/multi-result-list/multi-result-list.component';
+import { MultiConverterService } from './services/multi-converter.service';
+import { MultiResultCardComponent } from './components/multi-result-card/multi-result-card.component';
+import { TvShowFullDetailsComponent } from './components/tv-result-card/tv-show-full-details/tv-show-full-details.component';
+import { MovieFullDetailsComponent } from './components/movie-result-card/movie-full-details/movie-full-details.component';
+>>>>>>> Stashed changes
 
 @NgModule({
   declarations: [

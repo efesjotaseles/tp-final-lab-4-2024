@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { MovieResult } from '../../models/movie';
+<<<<<<< Updated upstream
 import { MovieSelectionService } from '../../services/selected-movie.service';
+=======
+>>>>>>> Stashed changes
 import { Router } from '@angular/router';
 
 @Component({
@@ -29,6 +32,7 @@ export class MovieResultCardComponent {
     vote_count: -1,
   };
 
+<<<<<<< Updated upstream
   constructor(
     private movieSelectionService: MovieSelectionService,
     private router: Router
@@ -36,6 +40,14 @@ export class MovieResultCardComponent {
 
   showFullDetails(): void {
     this.movieSelectionService.selectMovie(this.movieResult);
+=======
+  constructor(private router: Router){}
+
+  handleShowFullDetails(){
+
+    this.router.navigate(['/movie-details', this.movieResult.id]);
+
+>>>>>>> Stashed changes
   }
 
   // Propiedades adicionales para obtener el título y la URL de la imagen

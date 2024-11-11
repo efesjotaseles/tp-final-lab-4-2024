@@ -1,0 +1,24 @@
+<div class="container my-5"> 
+    <h1 class="text-center mb-4" style="font-size: 3rem;">{{ tvDetails?.name }}</h1>
+    
+    <div class="row">
+      <div class="col-md-4 d-flex justify-content-center">
+        <img 
+          [src]="'https://image.tmdb.org/t/p/w500' + tvDetails?.poster_path" 
+          alt="{{ tvDetails?.name }}" 
+          class="img-fluid rounded" 
+          style="max-width: 80%;"
+        />
+      </div>
+  
+      <div class="col-md-8">
+        <p class="lead"><strong>Overview:</strong> {{ tvDetails?.overview }}</p>
+        <p class="lead"><strong>First Air Date:</strong> {{ tvDetails?.first_air_date }}</p>
+        <p class="lead"><strong>Average Rating:</strong> {{ tvDetails?.vote_average }}/10</p>
+        <p class="lead"><strong>Seasons:</strong> {{ tvDetails?.number_of_seasons }}</p>
+        <p class="lead"><strong>Episodes:</strong> {{ tvDetails?.number_of_episodes }}</p>
+        <p class="lead"><strong>Original Language:</strong> {{ tvDetails?.original_language }}</p>
+      </div>
+    </div>
+  </div>
+  
