@@ -1,65 +1,67 @@
-<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-        <label for="inputName" class="form-label">Name:</label>
-        <input type="text" class="form-control" id="inputName" formControlName="name">
-        <div *ngIf="signUpForm.get('name')?.invalid && signUpForm.get('name')?.touched">
-            <small *ngIf="signUpForm.get('name')?.errors?.['required']">Name is required</small>
-            <small *ngIf="signUpForm.get('name')?.errors?.['pattern']">Only letters allowed</small>
+<div class="form-container"  style="max-width: 500px;">
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label for="inputName" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="inputName" formControlName="name">
+            <div *ngIf="signUpForm.get('name')?.invalid && signUpForm.get('name')?.touched">
+                <small class="text-danger" *ngIf="signUpForm.get('name')?.errors?.['required']">El nombre es obligatorio</small>
+                <small class="text-danger" *ngIf="signUpForm.get('name')?.errors?.['pattern']">Solo se permiten letras</small>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="inputLastName" class="form-label">Last Name:</label>
-        <input type="text" class="form-control" id="inputLastName" formControlName="lastName">
-        <div *ngIf="signUpForm.get('lastName')?.invalid && signUpForm.get('lastName')?.touched">
-            <small *ngIf="signUpForm.get('lastName')?.errors?.['required']">Last Name is required</small>
-            <small *ngIf="signUpForm.get('lastName')?.errors?.['pattern']">Only letters allowed</small>
+        <div class="mb-3">
+            <label for="inputLastName" class="form-label">Apellido:</label>
+            <input type="text" class="form-control" id="inputLastName" formControlName="lastName">
+            <div *ngIf="signUpForm.get('lastName')?.invalid && signUpForm.get('lastName')?.touched">
+                <small class="text-danger" *ngIf="signUpForm.get('lastName')?.errors?.['required']">El apellido es obligatorio</small>
+                <small class="text-danger" *ngIf="signUpForm.get('lastName')?.errors?.['pattern']">Solo se permiten letras</small>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="inputEmail" class="form-label">Email:</label>
-        <input type="email" class="form-control" id="inputEmail" formControlName="email">
-        <div *ngIf="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched">
-            <small *ngIf="signUpForm.get('email')?.errors?.['required']">Email is required</small>
-            <small *ngIf="signUpForm.get('email')?.errors?.['email']">Invalid email format</small>
-            <small *ngIf="signUpForm.get('email')?.errors?.['emailExists']">This email is already in use</small>
+        <div class="mb-3">
+            <label for="inputEmail" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="inputEmail" formControlName="email">
+            <div *ngIf="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched">
+                <small class="text-danger" *ngIf="signUpForm.get('email')?.errors?.['required']">El email es obligatorio</small>
+                <small class="text-danger" *ngIf="signUpForm.get('email')?.errors?.['email']">Formato de email invalido</small>
+                <small class="text-danger" *ngIf="signUpForm.get('email')?.errors?.['emailExists']">Este mail ya tiene una cuenta asociada</small>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="inputUsername" class="form-label">Username:</label>
-        <input type="text" class="form-control" id="inputUsername" formControlName="username">
-        <div *ngIf="signUpForm.get('username')?.invalid && signUpForm.get('username')?.touched">
-            <small *ngIf="signUpForm.get('username')?.errors?.['required']">Username is required</small>
-            <small *ngIf="signUpForm.get('username')?.errors?.['pattern']">Only letters, numbers, '.' and '-' allowed</small>
-            <small *ngIf="signUpForm.get('username')?.errors?.['usernameExists']">This username is already in use</small>
+        <div class="mb-3">
+            <label for="inputUsername" class="form-label">Usuario:</label>
+            <input type="text" class="form-control" id="inputUsername" formControlName="username">
+            <div *ngIf="signUpForm.get('username')?.invalid && signUpForm.get('username')?.touched">
+                <small class="text-danger" *ngIf="signUpForm.get('username')?.errors?.['required']">El nombre de usuario es obligatorio</small>
+                <small class="text-danger" *ngIf="signUpForm.get('username')?.errors?.['pattern']">Solo se permiten carácteres alfanúmericos, y carácteres especiales ', .' </small>
+                <small class="text-danger" *ngIf="signUpForm.get('username')?.errors?.['usernameExists']">Este nombre de usuario no se encuentra disponible</small>
+            </div>
         </div>
-    </div>
-    <div class="mb-3">
-        <label for="inputPassword" class="form-label">Password:</label>
-        <input type="password" class="form-control" id="inputPassword" formControlName="password">
-        <div *ngIf="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched">
-            <small *ngIf="signUpForm.get('password')?.errors?.['required']">Password is required</small>
-            <small *ngIf="signUpForm.get('password')?.errors?.['minlength']">Password must be at least 4 characters</small>
+        <div class="mb-3">
+            <label for="inputPassword" class="form-label">Contraseña:</label>
+            <input type="password" class="form-control" id="inputPassword" formControlName="password">
+            <div *ngIf="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched">
+                <small class="text-danger" *ngIf="signUpForm.get('password')?.errors?.['required']">La contraseña es obligatoria</small>
+                <small class="text-danger" *ngIf="signUpForm.get('password')?.errors?.['minlength']">La contraseña debe ser de por lo menos 4 carácteres</small>
+            </div>
         </div>
-    </div>
-    <div class="mb-3">
-        <label for="confirmPassword" class="form-label">Confirm Password:</label>
-        <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword">
-        <div *ngIf="signUpForm.get('confirmPassword')?.invalid && signUpForm.get('confirmPassword')?.touched">
-            <small *ngIf="signUpForm.get('confirmPassword')?.errors?.['required']">Confirm password is required</small>
-            <small *ngIf="signUpForm.hasError('notMatching') && signUpForm.get('confirmPassword')?.touched">Passwords do not match</small>
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirmar contraseña:</label>
+            <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword">
+            <div *ngIf="signUpForm.get('confirmPassword')?.invalid && signUpForm.get('confirmPassword')?.touched">
+                <small class="text-danger" *ngIf="signUpForm.get('confirmPassword')?.errors?.['required']">La confirmación de contraseña es obligatoria</small>
+                <small class="text-danger" *ngIf="signUpForm.hasError('notMatching') && signUpForm.get('confirmPassword')?.touched">Las contraseñas no coinciden</small>
 
+            </div>
         </div>
-    </div>
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="terms" formControlName="terms">
-        <label class="form-check-label" for="terms">Agree to terms and conditions</label>
-        <div *ngIf="signUpForm.get('terms')?.invalid && signUpForm.get('terms')?.touched">
-            <small>Accepting terms and conditions is required</small>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="terms" formControlName="terms">
+            <label class="form-check-label" for="terms">Acepto los términos y condiciones</label>
+            <div *ngIf="signUpForm.get('terms')?.invalid && signUpForm.get('terms')?.touched">
+                <small class="text-danger">Aceptar los términos y las condiciones es un campo obligatorio</small>
+            </div>
         </div>
-    </div>
-    <button type="submit" class="btn btn-primary" [disabled]="signUpForm.invalid">Submit</button>
+        <button type="submit" class="btn btn-primary" [disabled]="signUpForm.invalid">Submit</button>
 
-</form>
+    </form>
+</div>

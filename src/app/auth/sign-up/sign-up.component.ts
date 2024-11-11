@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { map } from 'rxjs/operators';
@@ -35,13 +35,18 @@ export class SignUpComponent {
       password: ['', [Validators.required, Validators.minLength(4)]],
       confirmPassword: ['', [Validators.required]],
       terms: [false, Validators.requiredTrue],
-    }, { validator: this.passwordMatchValidator });
+    }, {
+      
+    });
   }
 
-  passwordMatchValidator(group: FormGroup): ValidationErrors | null {
-    return group.get('password')!.value === group.get('confirmPassword')!.value
-      ? null : { notMatching: true };
-  }
+  passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
+    return password && confirmPassword && password.value !== confirmPassword.value
+      ? { passwordsMismatch: true }
+      : null;
+  };
 
   emailExistsValidator(control: AbstractControl) {
     return this.authService.checkEmailExists(control.value).pipe(
