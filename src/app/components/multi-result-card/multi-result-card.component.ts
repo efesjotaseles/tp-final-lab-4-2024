@@ -3,6 +3,7 @@ import { MediaType, MultiResult } from '../../models/multi';
 import { MultiConverterService } from '../../services/multi-converter.service';
 import { MovieResult } from '../../models/movie';
 import { TvResult } from '../../models/tv';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-multi-result-card',
@@ -10,7 +11,7 @@ import { TvResult } from '../../models/tv';
   standalone: false,
 })
 export class MultiResultCardComponent {
-  constructor(private convert: MultiConverterService) {}
+  constructor(private convert: MultiConverterService, private router: Router) {}
 
   @Input() multiResult: MultiResult = {
     id: 0,
@@ -35,6 +36,15 @@ export class MultiResultCardComponent {
         break;
     }
   }
+
+  handleShowFullDetails(): void {
+    if (this.multiResult.media_type === MediaType.Movie) {
+      this.router.navigate(['/movie-details', this.movieResult.id]);
+    } else if (this.multiResult.media_type === MediaType.Tv) {
+      this.router.navigate(['/tv-details', this.tvResult.id]);
+    }
+  }
+
 
   public mediaType = MediaType;
   public movieResult: MovieResult = {

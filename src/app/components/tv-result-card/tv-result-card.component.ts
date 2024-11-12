@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TvResult } from '../../models/tv';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tv-result-card',
@@ -28,9 +29,11 @@ export class TvResultCardComponent {
     vote_count: 0
   };
 
-  handleShowFullDetails(){
-    //TODO lógica de visionado de detalles completos
-    alert(this.tvResult.id);
+  constructor(private router: Router) {}
+
+  handleShowFullDetails(): void {
+    
+    this.router.navigate(['/tv-details', this.tvResult.id]);
   }
 
   public name: string | undefined = this.tvResult?.name;

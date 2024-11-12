@@ -8,6 +8,25 @@ export interface TvSearch {
   total_results: number;
 }
 
+export interface TvFullDetails{
+  adult: boolean;
+  backdrop_path: null | string;
+  genre_ids?: number[];
+  id: number;
+  origin_country: string[];
+  original_language: string | null;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: null | string;
+  first_air_date: string;
+  name: string;
+  vote_average: number;
+  vote_count: number;
+  number_of_episodes: number;
+  number_of_seasons: number;
+}
+
 export interface TvResult {
   adult: boolean;
   backdrop_path: null | string;

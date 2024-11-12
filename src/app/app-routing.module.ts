@@ -5,6 +5,8 @@ import { HomeComponent } from './components/home/home.component';
 import { SeriesComponent } from './components/series/series.component';
 import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { LoginComponent } from './auth/login/login.component';
+import { TvShowFullDetailsComponent } from './components/tv-result-card/tv-show-full-details/tv-show-full-details.component';
+import { MovieFullDetailsComponent } from './components/movie-result-card/movie-full-details/movie-full-details.component';
 
 
 const routes: Routes = [
@@ -20,9 +22,19 @@ const routes: Routes = [
     path: 'peliculas',
     component: PeliculasComponent
   },
+
+  {
+    path: 'movie-details/:id',
+    component: MovieFullDetailsComponent
+  },
+  
   {
     path: 'series',
     component: SeriesComponent
+  },
+  {
+    path: 'tv-details/:id',
+    component: TvShowFullDetailsComponent
   },
   {
     path: 'login',

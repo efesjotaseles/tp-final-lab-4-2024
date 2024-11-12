@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MovieResult } from '../../models/movie';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-result-card',
@@ -27,9 +28,12 @@ export class MovieResultCardComponent {
     vote_count: -1,
   };
 
+  constructor(private router: Router){}
+
   handleShowFullDetails(){
-    //TODO lógica de visionado de detalles completos
-    alert(this.movieResult.id);
+
+    this.router.navigate(['/movie-details', this.movieResult.id]);
+
   }
 
   public movieTitle: string | undefined = this.movieResult?.title;

@@ -25,6 +25,8 @@ import { TvResultListComponent } from './components/tv-result-list/tv-result-lis
 import { MultiResultListComponent } from './components/multi-result-list/multi-result-list.component';
 import { MultiConverterService } from './services/multi-converter.service';
 import { MultiResultCardComponent } from './components/multi-result-card/multi-result-card.component';
+import { TvShowFullDetailsComponent } from './components/tv-result-card/tv-show-full-details/tv-show-full-details.component';
+import { MovieFullDetailsComponent } from './components/movie-result-card/movie-full-details/movie-full-details.component';
 
 @NgModule({
   declarations: [
