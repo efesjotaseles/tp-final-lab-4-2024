@@ -9,14 +9,6 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './navbar.component.css',
   standalone: false,
 })
-<<<<<<< HEAD
-export class NavbarComponent {
-  buscado: string = '';
-  constructor(
-    private router: Router,
-    private busquedaService: BusquedaService
-  ) {}
-=======
 export class NavbarComponent implements OnInit {
 
   buscado: string = '';
@@ -24,15 +16,12 @@ export class NavbarComponent implements OnInit {
 
   constructor(private router: Router, private busquedaService: BusquedaService, public authService: AuthService, private cd: ChangeDetectorRef) { }
 
->>>>>>> charly
   enviarBusqueda() {
     if (this.buscado.trim()) {
       this.busquedaService.actualizarBusqueda(this.buscado);
       this.router.navigate(['/busqueda']);
     }
   }
-<<<<<<< HEAD
-=======
 
   ngOnInit(): void {
     this.authService.loggedInUser$.subscribe(user => {
@@ -66,5 +55,4 @@ export class NavbarComponent implements OnInit {
   //   this.router.navigate(['/login']);
   // }
 
->>>>>>> charly
 }
