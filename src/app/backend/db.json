@@ -1,7 +1,110 @@
-{"users": [
-    {
-        "id": 1,
-        "name": "admin",
-        "password": "1234"
-    }
-]}
+{
+    "users": [
+        {
+            "id": 1,
+            "username": "admin",
+            "password": "1234",
+            "name": "",
+            "lastname": "",
+            "email": "",
+            "avatar": "",
+            "watchlist": [],
+            "likes": [],
+            "watched": [],
+            "rating": [
+                {
+                    "id": "",
+                    "movieId": "",
+                    "number": ""
+                }
+            ],
+            "comments": [
+                {
+                    "id": "",
+                    "movieId": "",
+                    "text": ""
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "qwe",
+            "lastName": "qwe",
+            "email": "qwe@qwe.com",
+            "username": "qwe",
+            "password": "qwe1",
+            "confirmPassword": "qwe1",
+            "terms": true,
+            "avatar": "",
+            "watchlist": [],
+            "likes": [],
+            "watched": [],
+            "rating": [
+                {
+                    "id": "",
+                    "movieId": "",
+                    "number": ""
+                }
+            ],
+            "comments": [
+                {
+                    "id": "",
+                    "movieId": "",
+                    "text": ""
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "wer",
+            "lastName": "wer",
+            "email": "wer@wer.com",
+            "username": "wer",
+            "password": "wer1",
+            "avatar": "",
+            "watchlist": [],
+            "likes": [],
+            "watched": [],
+            "rating": [
+                {
+                    "id": "",
+                    "movieId": "",
+                    "number": ""
+                }
+            ],
+            "comments": [
+                {
+                    "id": "",
+                    "movieId": "",
+                    "text": ""
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "qsqsq",
+            "lastName": "qsqsq",
+            "email": "qsq@d.com",
+            "username": "qsqsq",
+            "password": "sqsq",
+            "avatar": "",
+            "watchlist": [],
+            "likes": [],
+            "watched": [],
+            "rating": [
+                {
+                    "id": "",
+                    "movieId": "",
+                    "number": ""
+                }
+            ],
+            "comments": [
+                {
+                    "id": "",
+                    "movieId": "",
+                    "text": ""
+                }
+            ]
+        }
+    ]
+}

@@ -7,6 +7,7 @@ import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { LoginComponent } from './auth/login/login.component';
 import { TvShowFullDetailsComponent } from './components/tv-result-card/tv-show-full-details/tv-show-full-details.component';
 import { MovieFullDetailsComponent } from './components/movie-result-card/movie-full-details/movie-full-details.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
 
 
 const routes: Routes = [
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },  
+  {
+    path: 'signup',
+    component: SignUpComponent
   },
   {
     path: 'busqueda',

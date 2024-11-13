@@ -27,6 +27,7 @@ import { MultiConverterService } from './services/multi-converter.service';
 import { MultiResultCardComponent } from './components/multi-result-card/multi-result-card.component';
 import { TvShowFullDetailsComponent } from './components/tv-result-card/tv-show-full-details/tv-show-full-details.component';
 import { MovieFullDetailsComponent } from './components/movie-result-card/movie-full-details/movie-full-details.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,6 @@ import { MovieFullDetailsComponent } from './components/movie-result-card/movie-
     HomeComponent,
     PeliculasComponent,
     SeriesComponent,
-    LoginComponent,
     BusquedaComponent,
     MovieResultCardComponent,
     MovieResultListComponent,
@@ -45,6 +45,7 @@ import { MovieFullDetailsComponent } from './components/movie-result-card/movie-
     TvResultListComponent,
     MultiResultListComponent,
     MultiResultCardComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
