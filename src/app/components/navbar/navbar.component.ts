@@ -1,10 +1,7 @@
 import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { BusquedaService } from '../../services/busqueda.service';
 import { Router } from '@angular/router';
-<<<<<<< HEAD
-=======
 import { AuthService } from '../../services/auth.service';
->>>>>>> charly
 
 @Component({
   selector: 'app-navbar',
