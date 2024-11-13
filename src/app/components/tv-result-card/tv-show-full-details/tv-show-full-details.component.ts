@@ -13,6 +13,7 @@ export class TvShowFullDetailsComponent implements OnInit {
 
   public tvDetails: Tv | null = null;
   private tvId: number | null = null;
+  public genres: string[] = [];
 
   constructor(
     private route: ActivatedRoute, // Obtener el ID de la URL
@@ -32,6 +33,7 @@ export class TvShowFullDetailsComponent implements OnInit {
     this.tmdbService.searchTvById(id).subscribe({
       next: (data) => {
         this.tvDetails = data;
+        this.genres = this.tvDetails.genres.map(genre => genre.name);
       },
       error: (error) => {
         console.error('Error al obtener detalles de la serie:', error);

@@ -43,7 +43,7 @@ export class TmdbService {
   }
 
   getTrendingMovies() {
-    return this.http.get<MovieSearch>(`${this.apiURL}/trending/movie/day`, {
+    return this.http.get<MovieSearch>(`${this.apiURL}/trending/movie/day?language=en-US`, {
       headers: this.headers,
     });
   }

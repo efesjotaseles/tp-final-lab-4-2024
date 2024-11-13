@@ -13,6 +13,7 @@ export class MovieFullDetailsComponent implements OnInit {
   public movieDetails: Movie | null = null;
   private movieId: number | null = null;
   public imgBaseUrl: string = 'https://image.tmdb.org/t/p/w500';
+  public genres : string[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -30,6 +31,7 @@ export class MovieFullDetailsComponent implements OnInit {
   private getMovieDetails(id: number): void {
     this.tmdbService.searchMovieById(id).subscribe((data) => {
       this.movieDetails = data; 
+      this.genres = data.genres.map(genre => genre.name);
     });
   }
 }
