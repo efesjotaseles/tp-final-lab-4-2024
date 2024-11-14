@@ -1,14 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { TmdbService } from '../../services/tmdb.service';
-import { TvSearch, TvSearchForm } from '../../models/tv';
+import { TvResult, TvSearch, TvSearchForm } from '../../models/tv';
 
+declare var bootstrap: any;
 @Component({
+
   selector: 'app-series',
   templateUrl: './series.component.html',
   standalone: false,
 })
 export class SeriesComponent {
-  constructor(private tmdbService: TmdbService) {}
+  constructor(private tmdbService: TmdbService, private el: ElementRef) {}
+
+  trendingTv : TvResult[] = [];
 
   public searchResults: TvSearch = {
     page: -1,
@@ -24,8 +28,32 @@ export class SeriesComponent {
     },
   };
 
+  ngOnInit(): void {
+    this.tmdbService.getTrendingTV().subscribe((data: any) => {
+      this.trendingTv = data.results.slice(0, 10);
+      this.initializeCarousel(); 
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.initializeCarousel();
+  }
+
+  private initializeCarousel(): void {
+    const carouselElement = this.el.nativeElement.querySelector('#trendingCarousel');
+    if (carouselElement) {
+      new bootstrap.Carousel(carouselElement, {
+        interval: 5000,
+        ride: 'carousel',
+      });
+    }
+  }
+
+  public isSearchPerformed = false;
+
   handleSearch(tvSearchForm: TvSearchForm) {
     this.tvSearchForm = tvSearchForm;
+    this.isSearchPerformed = true;
     this.tmdbService
       .searchTv(this.tvSearchForm.tvQueryParams)
       .subscribe({

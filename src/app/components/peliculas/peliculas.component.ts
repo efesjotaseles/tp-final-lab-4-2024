@@ -1,11 +1,14 @@
 import { TmdbService } from './../../services/tmdb.service';
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import {
+  Movie,
   MovieQueryParams,
   MovieResult,
   MovieSearch,
   MovieSearchForm,
 } from '../../models/movie';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-peliculas',
@@ -13,7 +16,9 @@ import {
   standalone: false,
 })
 export class PeliculasComponent {
-  constructor(private tmdbService: TmdbService) {}
+  constructor(private tmdbService: TmdbService, private el: ElementRef) {}
+
+  trendingMovies: Movie[] = [];
 
   public searchResults: MovieSearch = {
     page: -1,
@@ -22,6 +27,7 @@ export class PeliculasComponent {
     results: [],
   };
   public currentPage: number = -1;
+  public isSearchPerformed: boolean = false;
 
   public movieSearchForm: MovieSearchForm = {
     movieQueryParams: {
@@ -29,8 +35,33 @@ export class PeliculasComponent {
     },
   };
 
+  ngOnInit(): void {
+    // Obtener las películas trending al cargar el componente
+    this.tmdbService.getTrendingMovies().subscribe((data: any) => {
+      this.trendingMovies = data.results.slice(0, 10);
+      this.initializeCarousel(); // Inicializar el carrusel al obtener los datos
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.initializeCarousel(); // Inicializar el carrusel después de cargar la vista
+  }
+
+  private initializeCarousel(): void {
+    // Obtener el elemento del carrusel por ID y crear una instancia de Bootstrap
+    const carouselElement = this.el.nativeElement.querySelector('#trendingCarousel');
+    if (carouselElement) {
+      new bootstrap.Carousel(carouselElement, {
+        interval: 5000, // Cambiar cada 5 segundos
+        ride: 'carousel', // Para iniciar automáticamente
+      });
+    }
+  }
+
   handleSearch(movieSearchForm: MovieSearchForm) {
     this.movieSearchForm = movieSearchForm;
+    this.isSearchPerformed = true;
+
     this.tmdbService
       .searchMovies(this.movieSearchForm.movieQueryParams)
       .subscribe({

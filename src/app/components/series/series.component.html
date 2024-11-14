@@ -29,3 +29,36 @@
     >}
   </div>
 </div>
+
+<div class="container">
+  <!-- Mostrar el carrusel solo si no se ha realizado una búsqueda -->
+  <div *ngIf="!isSearchPerformed">
+    <div id="trendingCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+      <div class="carousel-inner">
+        <div class="carousel-item" *ngFor="let series of trendingTv; let i = index" [ngClass]="{'active': i === 0}">
+          <div class="row align-items-center">
+            <div class="col-md-4 text-center">
+              <img class="img-fluid rounded" [src]="'https://image.tmdb.org/t/p/w500/' + series.poster_path" [alt]="series.name">
+            </div>
+            <div class="col-md-8">
+              <!-- Ajustes en el tamaño y posición del título y overview -->
+              <h4 class="mb-2 mt-2 fw-bold">{{ series.name }}</h4> <!-- Aumenta el tamaño y hace más visible el título -->
+              <p class="fs-5">{{ series.overview | slice: 0:200 }}...</p> <!-- Aumenta el tamaño del texto del overview -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button class="carousel-control-prev position-absolute top-50 start-0 translate-middle-y ms-8" type="button" data-bs-target="#trendingCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next position-absolute top-50 end-0 translate-middle-y me-8" type="button" data-bs-target="#trendingCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>
+
