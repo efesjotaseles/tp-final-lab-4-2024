@@ -1,16 +1,59 @@
-<div>
-    <p>Películas que te gustaron:</p>
+<!-- Películas que te gustaron -->
+<p>Películas que te gustaron:</p>
+<div class="d-flex overflow-auto gap-2 mb-3">
+  <div *ngFor="let movie of likedMovies" class="flex-shrink-0 text-center">
+    <div class="d-flex flex-column align-items-center">
+      <img 
+        [src]="'https://image.tmdb.org/t/p/w200' + movie.poster_path" 
+        alt="Poster" 
+        class="img-fluid rounded" 
+        style="width: 100px;"
+      >
+      <button 
+        class="btn btn-primary btn-sm mt-2" 
+        (click)="handleShowFullDetails(movie.id)">
+        Show full details
+      </button>
+    </div>
+  </div>
 </div>
 
-<div>
-    <p>Comentarios que hiciste:</p>
+<!-- Películas vistas -->
+<p>Películas vistas:</p>
+<div class="d-flex overflow-auto gap-2 mb-3">
+  <div *ngFor="let movie of watchedMovies" class="flex-shrink-0 text-center">
+    <div class="d-flex flex-column align-items-center">
+      <img 
+        [src]="'https://image.tmdb.org/t/p/w200' + movie.poster_path" 
+        alt="Poster" 
+        class="img-fluid rounded" 
+        style="width: 100px;"
+      >
+      <button 
+        class="btn btn-primary btn-sm mt-2" 
+        (click)="handleShowFullDetails(movie.id)">
+        Show full details
+      </button>
+    </div>
+  </div>
 </div>
 
-<div>
-    <p>Películas vistas:</p>
+<!-- Películas para ver -->
+<p>Películas para ver:</p>
+<div class="d-flex overflow-auto gap-2">
+  <div *ngFor="let movie of watchlistMovies" class="flex-shrink-0 text-center">
+    <div class="d-flex flex-column align-items-center">
+      <img 
+        [src]="'https://image.tmdb.org/t/p/w200' + movie.poster_path" 
+        alt="Poster" 
+        class="img-fluid rounded" 
+        style="width: 100px;"
+      >
+      <button 
+        class="btn btn-primary btn-sm mt-2" 
+        (click)="handleShowFullDetails(movie.id)">
+        Show full details
+      </button>
+    </div>
+  </div>
 </div>
-
-<div>
-    <p>Películas para ver:</p>
-</div>
-
