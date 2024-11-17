@@ -44,40 +44,6 @@
           "date": "2024-11-17T05:26:21.196Z"
         }
       ]
-    },
-    {
-      "id": "3",
-      "name": "wer",
-      "lastName": "wer",
-      "email": "wer@wer.com",
-      "username": "wer",
-      "password": "wer1",
-      "avatar": "",
-      "watchlist": [],
-      "likes": [],
-      "watched": [],
-      "rating": [],
-      "comments": []
-    },
-    {
-      "id": "4",
-      "name": "qsqsq",
-      "lastName": "qsqsq",
-      "email": "qsq@d.com",
-      "username": "qsqsq",
-      "password": "sqsq",
-      "avatar": "",
-      "watchlist": [],
-      "likes": [],
-      "watched": [],
-      "rating": [
-        {
-          "id": "",
-          "movieId": "",
-          "number": ""
-        }
-      ],
-      "comments": []
     }
   ]
 }
