@@ -1,6 +1,7 @@
 import { Component, ElementRef } from '@angular/core';
 import { TmdbService } from '../../services/tmdb.service';
 import { TvResult, TvSearch, TvSearchForm } from '../../models/tv';
+import { Router } from '@angular/router';
 
 declare var bootstrap: any;
 @Component({
@@ -10,7 +11,7 @@ declare var bootstrap: any;
   standalone: false,
 })
 export class SeriesComponent {
-  constructor(private tmdbService: TmdbService, private el: ElementRef) {}
+  constructor(private tmdbService: TmdbService, private el: ElementRef, private router: Router) {}
 
   trendingTv : TvResult[] = [];
 
@@ -88,5 +89,10 @@ export class SeriesComponent {
       this.handleSearch(this.tvSearchForm);
     }
     console.log(requestedPage);
+  }
+
+  handleShowFullDetails(tvId: number): void {
+    
+    this.router.navigate(['/tv-details', tvId]);
   }
 }

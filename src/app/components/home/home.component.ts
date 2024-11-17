@@ -3,6 +3,7 @@ import { TmdbService } from '../../services/tmdb.service';
 import { MultiQueryParams, MultiSearch } from '../../models/multi';
 import { Movie } from '../../models/movie';
 import { TvResult, TvSearch, TvSearchForm } from '../../models/tv';
+import { Router } from '@angular/router';
 
 declare var bootstrap: any;
 
@@ -13,7 +14,7 @@ declare var bootstrap: any;
   standalone: false,
 })
 export class HomeComponent {
-  constructor(private tmdbService: TmdbService, private el: ElementRef) {}
+  constructor(private tmdbService: TmdbService, private el: ElementRef, private router: Router) {}
 
   trendingMovies: Movie[] = [];
   trendingTv: TvResult[] = [];
@@ -92,5 +93,14 @@ export class HomeComponent {
       this.handleSearch(this.multiQueryParams);
     }
     console.log(requestedPage);
+  }
+
+  handleShowFullDetails(movieId: number): void {
+    this.router.navigate(['/movie-details', movieId]);
+  }
+
+  handleShowFullDetailsTv(tvId: number): void {
+    
+    this.router.navigate(['/tv-details', tvId]);
   }
 }

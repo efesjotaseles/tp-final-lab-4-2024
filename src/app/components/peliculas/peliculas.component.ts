@@ -7,7 +7,7 @@ import {
   MovieSearch,
   MovieSearchForm,
 } from '../../models/movie';
-
+import { Router } from '@angular/router';
 declare var bootstrap: any;
 
 @Component({
@@ -16,7 +16,7 @@ declare var bootstrap: any;
   standalone: false,
 })
 export class PeliculasComponent {
-  constructor(private tmdbService: TmdbService, private el: ElementRef) {}
+  constructor(private tmdbService: TmdbService, private el: ElementRef, private router: Router) {}
 
   trendingMovies: Movie[] = [];
 
@@ -96,6 +96,10 @@ export class PeliculasComponent {
       this.handleSearch(this.movieSearchForm);
     }
     console.log(requestedPage);
+  }
+
+  handleShowFullDetails(movieId: number): void {
+    this.router.navigate(['/movie-details', movieId]);
   }
 
   /**
