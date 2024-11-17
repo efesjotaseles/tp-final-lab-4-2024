@@ -44,6 +44,8 @@
               <!-- Ajustes en el tamaño y posición del título y overview -->
               <h4 class="mb-2 mt-2 fw-bold">{{ series.name }}</h4> <!-- Aumenta el tamaño y hace más visible el título -->
               <p class="fs-5">{{ series.overview | slice: 0:200 }}...</p> <!-- Aumenta el tamaño del texto del overview -->
+              <a class="btn btn-primary" (click)="handleShowFullDetails(series.id)">Show full details</a>
+
             </div>
           </div>
         </div>
