@@ -28,6 +28,7 @@ import { MultiResultCardComponent } from './components/multi-result-card/multi-r
 import { TvShowFullDetailsComponent } from './components/tv-result-card/tv-show-full-details/tv-show-full-details.component';
 import { MovieFullDetailsComponent } from './components/movie-result-card/movie-full-details/movie-full-details.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,10 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
     TvResultListComponent,
     MultiResultListComponent,
     MultiResultCardComponent,
-    SignUpComponent
+    SignUpComponent,
+    ProfileComponent,
+    MovieFullDetailsComponent,
+    TvShowFullDetailsComponent
   ],
   imports: [
     BrowserModule,

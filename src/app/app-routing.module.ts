@@ -8,6 +8,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { TvShowFullDetailsComponent } from './components/tv-result-card/tv-show-full-details/tv-show-full-details.component';
 import { MovieFullDetailsComponent } from './components/movie-result-card/movie-full-details/movie-full-details.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 const routes: Routes = [
@@ -41,6 +42,10 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },  
+  {
+    path: 'profile',
+    component: ProfileComponent
+  },
   {
     path: 'signup',
     component: SignUpComponent
