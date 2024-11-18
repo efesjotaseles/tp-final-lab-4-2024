@@ -29,6 +29,7 @@ import { MovieFullDetailsComponent } from './components/movie-result-card/movie-
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { SettingsComponent } from './components/settings/settings.component';
     ProfileComponent,
     MovieFullDetailsComponent,
     TvShowFullDetailsComponent,
-    SettingsComponent
+    SettingsComponent,
+    AdminSettingsComponent
   ],
   imports: [
     BrowserModule,

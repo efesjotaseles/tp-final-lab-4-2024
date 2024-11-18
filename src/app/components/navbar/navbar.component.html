@@ -21,12 +21,18 @@
             <ul class="navbar-nav ms-auto me-5">
                 <li class="nav-item" *ngIf="authService.isLoggedIn()">
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             {{ loggedInUser?.username }}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li><a class="dropdown-item" routerLink="profile" routerLinkActive="active">Perfil</a></li>
-                            <li><a class="dropdown-item" routerLink="settings" routerLinkActive="active">Configuración</a></li>
+                            <li><a class="dropdown-item" routerLink="settings"
+                                    routerLinkActive="active">Configuración</a></li>
+                            <li class="nav-item" *ngIf="authService.isLoggedIn() && loggedInUser?.admin">
+                                <a class="dropdown-item" routerLink="admin-settings"
+                                    routerLinkActive="active">Configuración Admin</a>
+                            </li>
                             <li><a class="dropdown-item" (click)="logout()">Cerrar sesión</a></li>
                         </ul>
                     </div>

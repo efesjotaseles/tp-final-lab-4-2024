@@ -2,12 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = 'http://localhost:3000/users';
+  private commentsUrl = 'http://localhost:3000/comments';
+  private ratingsUrl = 'http://localhost:3000/ratings';
+
   private loggedInUserSubject = new BehaviorSubject<any>(this.getLoggedInUser());
   loggedInUser$ = this.loggedInUserSubject.asObservable();
 
@@ -40,6 +44,14 @@ export class AuthService {
   getLoggedInUser(): any {
     const user = localStorage.getItem('loggedInUser');
     return user ? JSON.parse(user) : null;
+  }
+
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+
+  deleteUser(userId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${userId}`);
   }
 
   register(newUser: any): Observable<any> {

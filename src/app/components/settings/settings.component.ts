@@ -10,7 +10,10 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
-  settingsForm!: FormGroup;
+  nameForm!: FormGroup;
+  lastnameForm!: FormGroup;
+  emailForm!: FormGroup;
+  passwordForm!: FormGroup;
   message: string = '';
   success: boolean = false;
 
@@ -27,15 +30,21 @@ export class SettingsComponent implements OnInit {
       return;
     }
 
-    this.settingsForm = this.fb.group({
+    this.nameForm = this.fb.group({
       name: [
         loggedInUser.name || '',
         [Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúñ\s]+$/)],
       ],
-      lastname: [ 
+    });
+
+    this.lastnameForm = this.fb.group({
+      lastname: [
         loggedInUser.lastname || '',
         [Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúñ\s]+$/)],
       ],
+    });
+
+    this.emailForm = this.fb.group({
       email: [
         loggedInUser.email || '',
         [
@@ -45,13 +54,15 @@ export class SettingsComponent implements OnInit {
         ],
         this.emailExistsValidator.bind(this),
       ],
+    });
+
+    this.passwordForm = this.fb.group({
       currentPassword: [
         '',
         [Validators.required, this.validateCurrentPassword.bind(this)],
       ],
       password: ['', [Validators.required, Validators.minLength(4)]],
     });
-    
   }
 
   validateCurrentPassword(control: any) {
@@ -61,33 +72,44 @@ export class SettingsComponent implements OnInit {
       : { incorrectPassword: true };
   }
 
-  updateSettings(): void {
-    if (this.settingsForm.invalid) return;
+  updateName(): void {
+    if (this.nameForm.invalid) return;
+    this.updateField('name', this.nameForm.value);
+  }
 
+  updateLastname(): void {
+    if (this.lastnameForm.invalid) return;
+    this.updateField('lastname', this.lastnameForm.value);
+  }
+
+  updateEmail(): void {
+    if (this.emailForm.invalid) return;
+    this.updateField('email', this.emailForm.value);
+  }
+
+  updatePassword(): void {
+    if (this.passwordForm.invalid) return;
+    this.updateField('password', this.passwordForm.value);
+  }
+
+  updateField(field: string, value: any): void {
     const loggedInUser = this.authService.getLoggedInUser();
-    const updatedUser = {
-      ...loggedInUser,
-      ...this.settingsForm.value,
-    };
+    const updatedUser = { ...loggedInUser, ...value };
 
     this.authService.updateUser(updatedUser).subscribe((response) => {
       if (response) {
-        this.message = '¡Datos actualizados correctamente!';
+        this.message = `¡${field.charAt(0).toUpperCase() + field.slice(1)} actualizado correctamente!`;
         this.success = true;
       } else {
-        this.message = 'Error al actualizar los datos. Intenta nuevamente.';
+        this.message = `Error al actualizar ${field}. Intenta nuevamente.`;
         this.success = false;
       }
-
-      setTimeout(() => {
-        this.message = '';
-      }, 5000);
     });
   }
 
   emailExistsValidator(control: any) {
-    return this.authService.checkEmailExists(control.value).pipe(
-      map((exists) => (exists ? { emailExists: true } : null))
-    );
+    return this.authService
+      .checkEmailExists(control.value)
+      .pipe(map((exists: boolean) => (exists ? { emailExists: true } : null)));
   }
 }
