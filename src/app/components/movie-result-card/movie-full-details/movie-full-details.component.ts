@@ -5,7 +5,7 @@ import { Movie } from '../../../models/movie';
 import { AuthService } from '../../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
-
+import { map, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-movie-full-details',
@@ -24,6 +24,7 @@ export class MovieFullDetailsComponent implements OnInit {
   ratingForm = new FormGroup({
     rating: new FormControl('') 
   });
+  comments: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -35,6 +36,7 @@ export class MovieFullDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.movieId = Number(this.route.snapshot.paramMap.get('id'));
     this.loggedInUser = this.authService.getLoggedInUser();
+    this.loadComments();
     if (this.movieId) {
       this.getMovieDetails(this.movieId);
     }
@@ -53,9 +55,12 @@ export class MovieFullDetailsComponent implements OnInit {
 
   toggleLike(): void {
     if (this.movieId) {
-      const index = this.loggedInUser.likes.indexOf(this.movieId);
+      const index = this.loggedInUser.likes.findIndex(
+        (item: { movieId?: number; tvId?: number }) =>
+          item.movieId === this.movieId
+      );
       if (index === -1) {
-        this.loggedInUser.likes.push(this.movieId); 
+        this.loggedInUser.likes.push({ movieId: this.movieId, tvId: null }); // Agrega a la lista de me gusta
       } else {
         this.loggedInUser.likes.splice(index, 1); 
       }
@@ -69,9 +74,12 @@ export class MovieFullDetailsComponent implements OnInit {
 
   toggleWatchlist(): void {
     if (this.movieId) {
-      const index = this.loggedInUser.watchlist.indexOf(this.movieId);
+      const index = this.loggedInUser.watchlist.findIndex(
+        (item: { movieId?: number; tvId?: number }) =>
+          item.movieId === this.movieId
+      );
       if (index === -1) {
-        this.loggedInUser.watchlist.push(this.movieId); 
+        this.loggedInUser.watchlist.push({ movieId: this.movieId, tvId: null });// Agrega a la lista de me gusta
       } else {
         this.loggedInUser.watchlist.splice(index, 1); 
       }
@@ -85,9 +93,13 @@ export class MovieFullDetailsComponent implements OnInit {
 
   toggleWatched(): void {
     if (this.movieId) {
-      const index = this.loggedInUser.watched.indexOf(this.movieId);
+      const index = this.loggedInUser.watched.findIndex(
+        (item: { movieId?: number; tvId?: number }) =>
+          item.movieId === this.movieId
+      );
       if (index === -1) {
-        this.loggedInUser.watched.push(this.movieId); 
+        this.loggedInUser.watched.push({ movieId: this.movieId, tvId: null });
+        // Agrega a la lista de me gusta
       } else {
         this.loggedInUser.watched.splice(index, 1); 
       }
@@ -104,68 +116,87 @@ export class MovieFullDetailsComponent implements OnInit {
       });
   }
 
-  submitComment() {
-    const userData = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
-    const userId = userData.id; 
-    const movieId = this.movieId; 
-    const text = this.commentForm.get('text')?.value;
+  loadComments(): void {
+    if (this.movieId) {
+      this.http.get<any[]>(`http://localhost:3000/comments?movieId=${this.movieId}`).subscribe(
+        (comments) => {
+          const userRequests = comments.map((comment) =>
+            this.http.get<any>(`http://localhost:3000/users/${comment.userId}`).pipe(
+              map((user) => ({
+                ...comment,
+                username: user.username // Agrega el username al comentario
+              }))
+            )
+          );
 
-    if (userId && text && movieId !== null) {
-      const currentComments = this.authService.getCurrentComments(userId);
-      const nextCommentId = currentComments.length > 0
-        ? Math.max(...currentComments.map(comment => parseInt(comment.id, 10) || 0)) + 1
-        : 1;
-
-      const comment: any = {
-        id: nextCommentId,
-        movieId: Number(movieId),
-        text,
+          forkJoin(userRequests).subscribe(
+            (commentsWithUsers) => {
+              this.comments = commentsWithUsers;
+            },
+            (error) => {
+              console.error('Error loading users for comments:', error);
+            }
+          );
+        },
+        (error) => {
+          console.error('Error loading comments:', error);
+        }
+      );
+    }
+  }
+  submitComment(): void {
+    if (this.movieId && this.commentForm.valid) {
+      const comment = {
+        userId: this.loggedInUser?.id,
+        movieId: this.movieId,
+        text: this.commentForm.value.text,
         date: new Date().toISOString()
       };
 
-      this.authService.addComment(userId, comment).subscribe(
-        response => {
-          console.log('Comentario guardado:', response);
+      this.http.post('http://localhost:3000/comments', comment).subscribe(
+        (response) => {
+          console.log('Comment submitted:', response);
+          this.commentForm.reset();
+          this.loadComments();
         },
-        error => {
-          console.error('Error al guardar el comentario:', error);
+        (error) => {
+          console.error('Error submitting comment:', error);
         }
       );
-    } else {
-      console.error('Faltan datos para enviar el comentario');
     }
   }
 
-  submitRating() {
-    
-    const userData = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
-    const userId = userData.id;
-    const movieId = this.movieId;
-    const ratingNumber = this.ratingForm.get('rating')?.value;
 
 
-    if (userId && movieId !== null) {
-      const currentRatings = this.authService.getCurrentRatings(userId);
-      const nextRatingId = currentRatings.length > 0
-        ? Math.max(...currentRatings.map(rating => parseInt(rating.id, 10) || 0)) + 1
-        : 1;
-      const rating: any = {
-        id: nextRatingId, 
-        movieId: Number(movieId),
-        number: ratingNumber, 
-      };
+  submitRating(): void {
+    if (this.movieId && this.ratingForm.valid) {
+      this.http.get<any[]>('http://localhost:3000/ratings').subscribe(
+        (ratings) => {
+          // Obtener el mayor id existente y sumar 1
+          const maxId = ratings.reduce((max, rating) => (rating.id > max ? rating.id : max), 0);
 
-      this.authService.addRating(userId, rating).subscribe(
-        (updatedUser) => {
-          console.log('Rating guardado:', updatedUser);
-          this.authService.updateLoggedInUser(updatedUser);
+          // Crear el nuevo rating
+          const rating = {
+            id: maxId + 1, // Incrementar el id en base decimal
+            userId: this.loggedInUser?.id,
+            movieId: this.movieId,
+            number: this.ratingForm.value.rating // Guarda el número directamente
+          };
+
+          this.http.post('http://localhost:3000/ratings', rating).subscribe(
+            (response) => {
+              console.log('Rating submitted:', response);
+              this.ratingForm.reset();
+            },
+            (error) => {
+              console.error('Error submitting rating:', error);
+            }
+          );
         },
         (error) => {
-          console.error('Error al guardar el rating:', error);
+          console.error('Error loading ratings:', error);
         }
       );
-    } else {
-      console.error('Faltan datos para enviar el rating');
-    } 
+    }
   }
 }

@@ -50,11 +50,9 @@ export class AuthService {
           ...newUser,
           id: maxId + 1,
           avatar: "",
-          watchlist: [],
           likes: [],
           watched: [],
-          rating: [],
-          comments: []
+          watchlist: []
         };
         delete fullUser.confirmPassword;
         delete fullUser.terms;
@@ -108,7 +106,7 @@ export class AuthService {
     );
   }
 
-  getCurrentComments(userId: string): any[] {
+  getCurrentComments(userId: number): any[] {
     const user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
     return user?.comments || [];
   }
@@ -122,7 +120,7 @@ export class AuthService {
     );
   }
 
-  getCurrentRatings(userId: string): any[] {
+  getCurrentRatings(userId: number): any[] {
     const user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
     return user?.ratings || [];
   }
