@@ -8,40 +8,66 @@
       "lastname": "",
       "email": "",
       "avatar": "",
-      "watchlist": [],
       "likes": [],
       "watched": [],
-      "rating": [],
-      "comments": []
+      "watchlist": []
     },
     {
       "id": "2",
       "name": "qwe",
       "lastName": "qwe",
-      "email": "qwe@qwe.com",
+      "email": "qwe@mail.com",
       "username": "qwe",
       "password": "qwe1",
-      "confirmPassword": "qwe1",
-      "terms": true,
       "avatar": "",
-      "watchlist": [],
-      "likes": [],
-      "watched": [
-        120
-      ],
-      "rating": [
+      "likes": [
         {
-          "id": 1,
-          "movieId": 120,
-          "number": 10
+          "movieId": null,
+          "tvId": 90228
+        },
+        {
+          "movieId": null,
+          "tvId": 157741
+        },
+        {
+          "movieId": 533535,
+          "tvId": null
+        },
+        {
+          "movieId": 447404,
+          "tvId": null
         }
       ],
-      "comments": [
+      "watched": [
         {
-          "id": 1,
-          "movieId": 120,
-          "text": "pruebaultima",
-          "date": "2024-11-17T05:26:21.196Z"
+          "movieId": null,
+          "tvId": 157741
+        },
+        {
+          "movieId": 533535,
+          "tvId": null
+        },
+        {
+          "movieId": 447404,
+          "tvId": null
+        },
+        {
+          "movieId": null,
+          "tvId": 90228
+        }
+      ],
+      "watchlist": [
+        {
+          "movieId": 558449,
+          "tvId": null
+        },
+        {
+          "movieId": null,
+          "tvId": 157741
+        },
+        {
+          "movieId": 447404,
+          "tvId": null
         }
       ]
     }
