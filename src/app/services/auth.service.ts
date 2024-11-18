@@ -54,13 +54,25 @@ export class AuthService {
     return this.http.delete(`${this.apiUrl}/${userId}`);
   }
 
+  getComments(): Observable<any[]> {
+    return this.http.get<any[]>(this.commentsUrl);
+  }
+
+  deleteComment(commentId: number): Observable<any> {
+    return this.http.delete(`${this.commentsUrl}/${commentId}`);
+  }
+
   register(newUser: any): Observable<any> {
     return this.http.get<any[]>(this.apiUrl).pipe(
       map(users => {
-        const maxId = users.reduce((max, user) => (user.id > max ? user.id : max), 0);
+        const maxId = users.reduce((max, user) => {
+          const userId = parseInt(user.id, 10);
+          return userId > max ? userId : max;
+        }, 0);
+  
         const fullUser = {
           ...newUser,
-          id: maxId + 1,
+          id: (maxId + 1).toString(),
           avatar: "",
           likes: [],
           watched: [],
@@ -68,12 +80,13 @@ export class AuthService {
         };
         delete fullUser.confirmPassword;
         delete fullUser.terms;
+  
         return fullUser;
       }),
-
       switchMap(userWithId => this.http.post(this.apiUrl, userWithId))
     );
   }
+  
 
   checkEmailExists(email: string): Observable<boolean> {
     return this.http.get<any[]>(`${this.apiUrl}?email=${email}`).pipe(
@@ -88,6 +101,7 @@ export class AuthService {
   }
 
   updateUser(updatedUser: any): Observable<any> {
+    console.log('Actualizando usuario:', updatedUser);
     return this.http.put(`${this.apiUrl}/${updatedUser.id}`, updatedUser).pipe(
       map(user => {
         const loggedInUser = this.getLoggedInUser();

@@ -1,5 +1,7 @@
 <div class="settings-container">
   <h2 class="mb-4">Configuración de cuenta</h2>
+  
+  
 
   <!-- Modificar nombre -->
   <div class="section mb-4"> 
@@ -35,37 +37,38 @@
   </div>
 
   <!-- Modificar apellido -->
-  <div class="section mb-4">
-    <button
-      class="btn btn-secondary w-100 text-start mb-2"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#lastnameSection"
-      aria-expanded="false"
-      aria-controls="lastnameSection"
-    >
-      Modificar apellido
-    </button>
-    <div class="collapse" id="lastnameSection">
-      <form [formGroup]="lastnameForm" (ngSubmit)="updateLastname()" class="mt-3">
-        <div class="form-group">
-          <label for="lastname">Apellido:</label>
-          <input
-            type="text"
-            id="lastname"
-            class="form-control"
-            formControlName="lastname"
-            [ngClass]="{'is-invalid': lastnameForm.get('lastname')?.invalid && lastnameForm.get('lastname')?.touched}"
-          />
-          <div *ngIf="lastnameForm.get('lastname')?.invalid && lastnameForm.get('lastname')?.touched" class="invalid-feedback">
-            <span *ngIf="lastnameForm.get('lastname')?.errors?.['required']">El apellido es obligatorio.</span>
-            <span *ngIf="lastnameForm.get('lastname')?.errors?.['pattern']">El apellido solo debe contener letras y espacios.</span>
-          </div>
+<div class="section mb-4">
+  <button
+    class="btn btn-secondary w-100 text-start mb-2"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#lastNameSection"
+    aria-expanded="false"
+    aria-controls="lastNameSection"
+  >
+    Modificar apellido
+  </button>
+  <div class="collapse" id="lastNameSection">
+    <form [formGroup]="lastNameForm" (ngSubmit)="updateLastName()" class="mt-3">
+      <div class="form-group">
+        <label for="lastName">Apellido:</label>
+        <input
+          type="text"
+          id="lastName"
+          class="form-control"
+          formControlName="lastName"
+          [ngClass]="{'is-invalid': lastNameForm.get('lastName')?.invalid && lastNameForm.get('lastName')?.touched}"
+        />
+        <div *ngIf="lastNameForm.get('lastName')?.invalid && lastNameForm.get('lastName')?.touched" class="invalid-feedback">
+          <span *ngIf="lastNameForm.get('lastName')?.errors?.['required']">El apellido es obligatorio.</span>
+          <span *ngIf="lastNameForm.get('lastName')?.errors?.['pattern']">El apellido solo debe contener letras y espacios.</span>
         </div>
-        <button type="submit" class="btn btn-primary mt-3" [disabled]="lastnameForm.invalid">Guardar</button>
-      </form>
-    </div>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="lastNameForm.invalid">Guardar</button>
+    </form>
   </div>
+</div>
+
 
   <!-- Modificar email -->
   <div class="section mb-4"> 
@@ -143,4 +146,12 @@
             <span *ngIf="passwordForm.get('password')?.errors?.['minlength']">Debe tener al menos 4 caracteres.</span>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary mt-3" [disabled]="passwordForm.invalid">Guar
+        <button type="submit" class="btn btn-primary mt-3" [disabled]="passwordForm.invalid">Guardar</button>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="message" [ngClass]="{'alert alert-success': success, 'alert alert-danger': !success}" class="mt-3 position-fixed bottom-0 start-50 translate-middle-x mb-4">
+    {{ message }}
+  </div>
+</div>

@@ -9,27 +9,33 @@ import { Router } from '@angular/router';
 })
 export class AdminSettingsComponent implements OnInit {
 
-  users: any[] = [];  // Para almacenar la lista de usuarios
+  users: any[] = []; 
+  comments: any[] = []; 
 
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    this.loadUsers();  // Cargar la lista de usuarios al iniciar el componente
+    this.loadUsers();     
+    this.loadComments();  
   }
 
-  // Método para cargar los usuarios desde el servicio
   loadUsers(): void {
     this.authService.getUsers().subscribe(users => {
       this.users = users;
     });
   }
 
-  // Método para eliminar un usuario
+  loadComments(): void {
+    this.authService.getComments().subscribe(comments => {
+      this.comments = comments;
+    });
+  }
+
   deleteUser(userId: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-      this.authService.deleteUser(userId).subscribe(response => {
+      this.authService.deleteUser(userId).subscribe(() => {
         alert('Usuario eliminado correctamente');
-        this.loadUsers();  // Recargar la lista de usuarios
+        this.loadUsers(); 
       }, error => {
         alert('Hubo un error al eliminar el usuario');
         console.error(error);
@@ -37,4 +43,15 @@ export class AdminSettingsComponent implements OnInit {
     }
   }
 
+  deleteComment(commentId: number): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este comentario?')) {
+      this.authService.deleteComment(commentId).subscribe(() => {
+        alert('Comentario eliminado correctamente');
+        this.loadComments(); 
+      }, error => {
+        alert('Hubo un error al eliminar el comentario');
+        console.error(error);
+      });
+    }
+  }
 }

@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class SettingsComponent implements OnInit {
   nameForm!: FormGroup;
-  lastnameForm!: FormGroup;
+  lastNameForm!: FormGroup;
   emailForm!: FormGroup;
   passwordForm!: FormGroup;
   message: string = '';
@@ -37,9 +37,9 @@ export class SettingsComponent implements OnInit {
       ],
     });
 
-    this.lastnameForm = this.fb.group({
-      lastname: [
-        loggedInUser.lastname || '',
+    this.lastNameForm = this.fb.group({
+      lastName: [
+        loggedInUser.lastName || '',
         [Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúñ\s]+$/)],
       ],
     });
@@ -77,9 +77,9 @@ export class SettingsComponent implements OnInit {
     this.updateField('name', this.nameForm.value);
   }
 
-  updateLastname(): void {
-    if (this.lastnameForm.invalid) return;
-    this.updateField('lastname', this.lastnameForm.value);
+  updateLastName(): void {
+    if (this.lastNameForm.invalid) return;
+    this.updateField('lastName', this.lastNameForm.value);  
   }
 
   updateEmail(): void {
@@ -92,20 +92,27 @@ export class SettingsComponent implements OnInit {
     this.updateField('password', this.passwordForm.value);
   }
 
-  updateField(field: string, value: any): void {
+  updateField(field: string, value: any): void { 
     const loggedInUser = this.authService.getLoggedInUser();
     const updatedUser = { ...loggedInUser, ...value };
-
+  
     this.authService.updateUser(updatedUser).subscribe((response) => {
+      console.log('Response from updateUser:', response); // Verifica la respuesta
+  
       if (response) {
-        this.message = `¡${field.charAt(0).toUpperCase() + field.slice(1)} actualizado correctamente!`;
+        this.message = `${field.charAt(0).toUpperCase() + field.slice(1)} actualizado correctamente!`;
         this.success = true;
       } else {
         this.message = `Error al actualizar ${field}. Intenta nuevamente.`;
         this.success = false;
       }
+    }, (error) => {
+      console.error('Error during update:', error); // Captura cualquier error en la llamada
+      this.message = `Error al actualizar ${field}. Intenta nuevamente.`;
+      this.success = false;
     });
   }
+  
 
   emailExistsValidator(control: any) {
     return this.authService

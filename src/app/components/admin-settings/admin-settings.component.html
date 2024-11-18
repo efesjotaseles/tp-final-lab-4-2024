@@ -1,6 +1,7 @@
 <div class="container">
     <h2>Configuración Admin:</h2>
-    
+  
+    <!-- Lista de Usuarios -->
     <h3>Lista de Usuarios:</h3>
     <table class="table table-striped">
       <thead>
@@ -18,6 +19,29 @@
           <td>{{ user.username }}</td>
           <td>
             <button class="btn btn-danger" (click)="deleteUser(user.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Lista de Comentarios -->
+    <h3>Lista de Comentarios:</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Comentario</th>
+          <th>Usuario ID</th>
+          <th>Película ID</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let comment of comments">
+          <td>{{ comment.text }}</td>
+          <td>{{ comment.userId }}</td>
+          <td>{{ comment.movieId }}</td>
+          <td>
+            <button class="btn btn-danger" (click)="deleteComment(comment.id)">Eliminar</button>
           </td>
         </tr>
       </tbody>
