@@ -9,6 +9,7 @@ import { MovieFullDetailsComponent } from './components/movie-result-card/movie-
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 
 
 const routes: Routes = [
@@ -54,6 +55,8 @@ const routes: Routes = [
     path: 'signup',
     component: SignUpComponent
   },
+  { path: 'admin-settings',
+     component: AdminSettingsComponent },
   {
     path: '**',
     component: HomeComponent

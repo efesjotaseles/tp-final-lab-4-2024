@@ -35,17 +35,30 @@ export class SignUpComponent {
       confirmPassword: ['', [Validators.required]],
       terms: [false, Validators.requiredTrue],
     }, {
-      
+      validators: this.passwordMatchValidator 
     });
   }
+  
 
-  passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
-    return password && confirmPassword && password.value !== confirmPassword.value
-      ? { passwordsMismatch: true }
-      : null;
-  };
+  passwordMatchValidator(group: FormGroup): ValidationErrors | null {
+    const password = group.get('password');
+    const confirmPassword = group.get('confirmPassword');
+    
+    if (password && confirmPassword && password.value !== confirmPassword.value) {
+      confirmPassword.setErrors({ passwordsMismatch: true }); 
+      return { passwordsMismatch: true }; 
+    }
+  
+    if (confirmPassword && confirmPassword.hasError('passwordsMismatch')) {
+      confirmPassword.setErrors(null); 
+    }
+  
+    return null;
+  }
+  
+  
+  
+  
 
   emailExistsValidator(control: AbstractControl) {
     return this.authService.checkEmailExists(control.value).pipe(
@@ -60,23 +73,29 @@ export class SignUpComponent {
   }
 
   onSubmit() {
-    if (this.password !== this.confirmPassword) {
-      alert("Passwords do not match!");
+    if (this.signUpForm.invalid) {
       return;
     }
-
+  
+    if (this.signUpForm.hasError('passwordsMismatch')) {
+      alert("Las contraseñas no coinciden!");
+      return;
+    }
+  
     if (this.signUpForm.valid) {
       const newUser = this.signUpForm.value;
       this.authService.register(newUser).subscribe(
         (response) => {
-          alert("Registration successful!");
+          alert("¡Registro exitoso!");
           this.router.navigate(['/home']);
         },
         (error) => {
-          alert("Registration failed!");
+          alert("¡Error en el registro!");
           console.error(error);
         }
       );
     }
   }
+  
+  
 }

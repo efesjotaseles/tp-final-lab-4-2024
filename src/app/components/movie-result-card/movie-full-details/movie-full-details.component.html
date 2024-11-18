@@ -45,9 +45,10 @@
             d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z" />
         </svg>
       </button>
-      <button class="btn btn-warning" (click)="toggleWatchlist()">
-        <svg *ngIf="isWatchlist()" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-clock-fill"
-          viewBox="0 0 16 16">
+      <button class="btn btn-warning" (click)="toggleWatchlist()" [title]="isWatchlist() ? 'Eliminar de la Watchlist' : 'Agregar a la Watchlist'"
+      >
+        <svg *ngIf="isWatchlist()" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+          class="bi bi-clock-fill" viewBox="0 0 16 16">
           <path
             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
         </svg>
@@ -62,7 +63,7 @@
 
     <form [formGroup]="ratingForm" (ngSubmit)="submitRating()">
       <input type="number" formControlName="rating" min="1" max="10" step="1" />
-      <button type="submit" class="btn btn-sm btn-primary">Calificar</button>
+      <button type="submit" class="btn btn-primary">Calificar</button>
     </form>
   </div>
   <div class="comments-section">

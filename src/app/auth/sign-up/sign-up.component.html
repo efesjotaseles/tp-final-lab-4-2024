@@ -49,11 +49,17 @@
             <label for="confirmPassword" class="form-label">Confirmar contraseña:</label>
             <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword">
             <div *ngIf="signUpForm.get('confirmPassword')?.invalid && signUpForm.get('confirmPassword')?.touched">
-                <small class="text-danger" *ngIf="signUpForm.get('confirmPassword')?.errors?.['required']">La confirmación de contraseña es obligatoria</small>
-                <small class="text-danger" *ngIf="signUpForm.hasError('notMatching') && signUpForm.get('confirmPassword')?.touched">Las contraseñas no coinciden</small>
-
+              <small class="text-danger" *ngIf="signUpForm.get('confirmPassword')?.errors?.['required']">
+                La confirmación de contraseña es obligatoria
+              </small>
+              <small class="text-danger" *ngIf="signUpForm.get('confirmPassword')?.hasError('passwordsMismatch') && signUpForm.get('confirmPassword')?.touched">
+                Las contraseñas no coinciden
+              </small>
+              
             </div>
-        </div>
+          </div>
+          
+          
         <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="terms" formControlName="terms">
             <label class="form-check-label" for="terms">Acepto los términos y condiciones</label>
