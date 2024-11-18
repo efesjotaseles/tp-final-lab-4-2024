@@ -15,6 +15,7 @@ import { map, forkJoin } from 'rxjs';
 export class MovieFullDetailsComponent implements OnInit {
   public movieDetails: Movie | null = null;
   private movieId: number | null = null;
+  private tvId: number | null = null;
   public imgBaseUrl: string = 'https://image.tmdb.org/t/p/w500';
   public genres: string[] = [];
   loggedInUser: any;
@@ -22,7 +23,7 @@ export class MovieFullDetailsComponent implements OnInit {
     text: new FormControl('')
   });
   ratingForm = new FormGroup({
-    rating: new FormControl('') 
+    rating: new FormControl('')
   });
   comments: any[] = [];
 
@@ -37,6 +38,7 @@ export class MovieFullDetailsComponent implements OnInit {
     this.movieId = Number(this.route.snapshot.paramMap.get('id'));
     this.loggedInUser = this.authService.getLoggedInUser();
     this.loadComments();
+    this.loadUserRating();
     if (this.movieId) {
       this.getMovieDetails(this.movieId);
     }
@@ -62,7 +64,7 @@ export class MovieFullDetailsComponent implements OnInit {
       if (index === -1) {
         this.loggedInUser.likes.push({ movieId: this.movieId, tvId: null }); // Agrega a la lista de me gusta
       } else {
-        this.loggedInUser.likes.splice(index, 1); 
+        this.loggedInUser.likes.splice(index, 1);
       }
       this.updateUserData();
     }
@@ -81,7 +83,7 @@ export class MovieFullDetailsComponent implements OnInit {
       if (index === -1) {
         this.loggedInUser.watchlist.push({ movieId: this.movieId, tvId: null });// Agrega a la lista de me gusta
       } else {
-        this.loggedInUser.watchlist.splice(index, 1); 
+        this.loggedInUser.watchlist.splice(index, 1);
       }
       this.updateUserData();
     }
@@ -101,7 +103,7 @@ export class MovieFullDetailsComponent implements OnInit {
         this.loggedInUser.watched.push({ movieId: this.movieId, tvId: null });
         // Agrega a la lista de me gusta
       } else {
-        this.loggedInUser.watched.splice(index, 1); 
+        this.loggedInUser.watched.splice(index, 1);
       }
       this.updateUserData();
     }
@@ -117,21 +119,33 @@ export class MovieFullDetailsComponent implements OnInit {
   }
 
   loadComments(): void {
-    if (this.movieId) {
-      this.http.get<any[]>(`http://localhost:3000/comments?movieId=${this.movieId}`).subscribe(
+    if (this.movieId || this.tvId) {
+      // Construir el endpoint dinámico basado en el tipo (movieId o tvId)
+      const filter = this.movieId ? `movieId=${this.movieId}` : `tvId=${this.tvId}`;
+
+      // Hacer la solicitud HTTP con el filtro aplicado
+      this.http.get<any[]>(`http://localhost:3000/comments?${filter}`).subscribe(
         (comments) => {
-          const userRequests = comments.map((comment) =>
+          // Filtrar los comentarios con movieId o tvId correspondiente si la API no lo hace
+          const filteredComments = comments.filter(comment =>
+            (this.movieId && comment.movieId === this.movieId) ||
+            (this.tvId && comment.tvId === this.tvId)
+          );
+
+          // Cargar los usuarios asociados a esos comentarios
+          const userRequests = filteredComments.map((comment) =>
             this.http.get<any>(`http://localhost:3000/users/${comment.userId}`).pipe(
               map((user) => ({
                 ...comment,
-                username: user.username // Agrega el username al comentario
+                username: user.username // Agregar el username al comentario
               }))
             )
           );
 
+          // Usamos forkJoin para esperar que todos los usuarios estén listos
           forkJoin(userRequests).subscribe(
             (commentsWithUsers) => {
-              this.comments = commentsWithUsers;
+              this.comments = commentsWithUsers; // Asignar los comentarios con usuarios
             },
             (error) => {
               console.error('Error loading users for comments:', error);
@@ -144,11 +158,13 @@ export class MovieFullDetailsComponent implements OnInit {
       );
     }
   }
+
   submitComment(): void {
-    if (this.movieId && this.commentForm.valid) {
+    if ((this.movieId || this.tvId) && this.commentForm.valid) {
       const comment = {
         userId: this.loggedInUser?.id,
-        movieId: this.movieId,
+        movieId: this.movieId || null, // Si no hay movieId, enviar null
+        tvId: this.tvId || null,       // Si no hay tvId, enviar null
         text: this.commentForm.value.text,
         date: new Date().toISOString()
       };
@@ -166,37 +182,74 @@ export class MovieFullDetailsComponent implements OnInit {
     }
   }
 
-
-
-  submitRating(): void {
-    if (this.movieId && this.ratingForm.valid) {
+  loadUserRating(): void {
+    if (this.movieId && this.loggedInUser) {
       this.http.get<any[]>('http://localhost:3000/ratings').subscribe(
         (ratings) => {
-          // Obtener el mayor id existente y sumar 1
-          const maxId = ratings.reduce((max, rating) => (rating.id > max ? rating.id : max), 0);
-
-          // Crear el nuevo rating
-          const rating = {
-            id: maxId + 1, // Incrementar el id en base decimal
-            userId: this.loggedInUser?.id,
-            movieId: this.movieId,
-            number: this.ratingForm.value.rating // Guarda el número directamente
-          };
-
-          this.http.post('http://localhost:3000/ratings', rating).subscribe(
-            (response) => {
-              console.log('Rating submitted:', response);
-              this.ratingForm.reset();
-            },
-            (error) => {
-              console.error('Error submitting rating:', error);
-            }
+          // Buscar si existe un rating para este movieId y userId
+          const userRating = ratings.find(
+            (rating) => rating.movieId === this.movieId && rating.userId === this.loggedInUser.id
           );
+
+          // Si existe un rating, lo ponemos en el formulario
+          if (userRating) {
+            this.ratingForm.patchValue({
+              rating: userRating.number // Establecemos el valor del rating
+            });
+          }
         },
         (error) => {
-          console.error('Error loading ratings:', error);
+          console.error('Error loading user ratings:', error);
         }
       );
+    }
+  }
+  submitRating(): void {
+    if ((this.movieId || this.tvId) && !(this.movieId && this.tvId)) {
+      if (this.ratingForm.valid) {
+        this.http.get<any[]>('http://localhost:3000/ratings').subscribe(
+          (ratings) => {
+            const existingRating = ratings.find(
+              (rating) =>
+                (rating.movieId === this.movieId || rating.tvId === this.tvId) &&
+                rating.userId === this.loggedInUser?.id
+            );
+  
+            const newOrUpdatedRating = {
+              id: existingRating?.id || ratings.reduce((max, rating) => Math.max(max, +rating.id), 0) + 1,
+              userId: this.loggedInUser?.id,
+              number: this.ratingForm.value.rating,
+              movieId: this.movieId || null,
+              tvId: this.tvId || null
+            };
+  
+            if (existingRating) {
+              // Actualizar rating
+              this.http.put(`http://localhost:3000/ratings/${existingRating.id}`, newOrUpdatedRating).subscribe(
+                (response) => {
+                  console.log('Rating updated:', response);
+                  this.ratingForm.reset();
+                  this.loadUserRating();
+                },
+                (error) => console.error('Error updating rating:', error)
+              );
+            } else {
+              // Crear rating nuevo
+              this.http.post('http://localhost:3000/ratings', newOrUpdatedRating).subscribe(
+                (response) => {
+                  console.log('New Rating created:', response);
+                  this.ratingForm.reset();
+                  this.loadUserRating();
+                },
+                (error) => console.error('Error creating new rating:', error)
+              );
+            }
+          },
+          (error) => console.error('Error loading ratings:', error)
+        );
+      }
+    } else {
+      console.error('Define solo movieId o tvId, pero no ambos');
     }
   }
 }

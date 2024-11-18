@@ -65,11 +65,21 @@
       <button type="submit" class="btn btn-sm btn-primary">Calificar</button>
     </form>
   </div>
-
-  <div>
-    <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
-      <textarea formControlName="text" class="form-control" ></textarea>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+  <div class="comments-section">
+    <h3>Comentarios</h3>
+    <!-- Lista de comentarios -->
+    <div *ngFor="let comment of comments" class="">
+      <p><strong>{{ comment.username }}</strong>: {{ comment.text }}</p>
+      <small>{{ comment.date | date: 'short' }}</small>
+    </div>
+    <div *ngIf="comments.length === 0">
+      <p>No hay comentarios para esta película.</p>
+    </div>
+    <div>
+      <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+        <textarea formControlName="text" class="form-control"></textarea>
+        <button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">Comentar</button>
+      </form>
+    </div>
   </div>
 </div>

@@ -96,32 +96,4 @@ export class AuthService {
     this.loggedInUserSubject.next(updatedUser);
     localStorage.setItem('loggedInUser', JSON.stringify(updatedUser));
   }
-
-  addComment(userId: number, comment: { id: number; movieId: number; text: string; date: string }): Observable<any> {
-    return this.http.get<any>(`http://localhost:3000/users/${userId}`).pipe(
-      switchMap(user => {
-        const updatedComments = user.comments ? [...user.comments, comment] : [comment];
-        return this.http.patch(`http://localhost:3000/users/${userId}`, { comments: updatedComments });
-      })
-    );
-  }
-
-  getCurrentComments(userId: number): any[] {
-    const user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
-    return user?.comments || [];
-  }
-
-  addRating(userId: number, rating: { id: number, movieId: number, number: number }): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${userId}`).pipe(
-      switchMap(user => {
-        const updatedRatings = user.rating ? [...user.rating, rating] : [rating];
-        return this.http.patch(`${this.apiUrl}/${userId}`, { rating: updatedRatings });
-      })
-    );
-  }
-
-  getCurrentRatings(userId: number): any[] {
-    const user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
-    return user?.ratings || [];
-  }
 }

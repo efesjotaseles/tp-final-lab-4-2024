@@ -21,12 +21,15 @@ export class ProfileComponent implements OnInit {
   loadingLiked: boolean = true;
   loadingWatched: boolean = true;
   loadingWatchlist: boolean = true;
+  loadingLikedTv: boolean = true;
+  loadingWatchedTv: boolean = true;
+  loadingWatchlistTv: boolean = true;
 
   constructor(
     private authService: AuthService,
     private tmdbService: TmdbService,
-    private router: Router 
-  ) {}
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     const loggedInUser = this.authService.getLoggedInUser();
@@ -48,15 +51,15 @@ export class ProfileComponent implements OnInit {
 
   private loadMovies(movieData: { movieId: number, tvId: number | null }[], type: 'liked' | 'watched' | 'watchlist'): void {
     // Extraer solo los movieIds de los datos
-    const validMovieIds = movieData.filter(item => item.movieId !== null).map(item => item.movieId!);
+    const validMovieIds = movieData.filter(item => item.movieId !== null && item.movieId !== undefined).map(item => item.movieId!);
 
     // Realizar las solicitudes para obtener las películas por ID
     const movieRequests = validMovieIds.map(id => this.tmdbService.searchMovieById(id));
-    
+
     forkJoin(movieRequests).subscribe({
       next: (movies) => {
         const filteredMovies = movies.filter((movie): movie is Movie => movie !== undefined);
-        
+
         if (type === 'liked') {
           this.likedMovies = filteredMovies;
           this.loadingLiked = false;
@@ -70,7 +73,7 @@ export class ProfileComponent implements OnInit {
       },
       error: (err) => {
         console.error(`Error loading ${type} movies:`, err);
-  
+
         if (type === 'liked') this.loadingLiked = false;
         else if (type === 'watched') this.loadingWatched = false;
         else if (type === 'watchlist') this.loadingWatchlist = false;
@@ -80,32 +83,36 @@ export class ProfileComponent implements OnInit {
 
   private loadTv(tvData: { movieId: number | null, tvId: number }[], type: 'liked' | 'watched' | 'watchlist'): void {
     // Extraer solo los tvIds de los datos donde tvId no es null
-    const tvIds = tvData.filter(data => data.tvId !== null).map(data => data.tvId!); // Aseguramos que tvId no sea null
-    
+    const tvIds = tvData
+      .filter(data => {
+        return data.tvId !== null && data.tvId !== undefined;
+      })
+      .map(data => data.tvId!);
+
     // Realizar las solicitudes para obtener las series por tvId
     const tvRequests = tvIds.map(id => this.tmdbService.searchTvById(id));
-    
+
     forkJoin(tvRequests).subscribe({
       next: (tvShows) => {
         const filteredTvShows = tvShows.filter((tvShow): tvShow is Tv => tvShow !== undefined);
-        
+
         if (type === 'liked') {
           this.likedTvShows = filteredTvShows;
-          this.loadingLiked = false;
+          this.loadingLikedTv = false;
         } else if (type === 'watched') {
           this.watchedTvShows = filteredTvShows;
-          this.loadingWatched = false;
+          this.loadingWatchedTv = false;
         } else if (type === 'watchlist') {
           this.watchlistTvShows = filteredTvShows;
-          this.loadingWatchlist = false;
+          this.loadingWatchlistTv = false;
         }
       },
       error: (err) => {
         console.error(`Error loading ${type} TV shows:`, err);
-  
-        if (type === 'liked') this.loadingLiked = false;
-        else if (type === 'watched') this.loadingWatched = false;
-        else if (type === 'watchlist') this.loadingWatchlist = false;
+
+        if (type === 'liked') this.loadingLikedTv = false;
+        else if (type === 'watched') this.loadingWatchedTv = false;
+        else if (type === 'watchlist') this.loadingWatchlistTv = false;
       }
     });
   }

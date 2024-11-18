@@ -5,6 +5,8 @@ import { Tv } from '../../../models/tv';
 import { AuthService } from '../../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
+import { map, forkJoin } from 'rxjs';
+
 
 @Component({
   selector: 'app-tv-show-full-details',
@@ -15,6 +17,7 @@ export class TvShowFullDetailsComponent implements OnInit {
 
   public tvDetails: Tv | null = null;
   private tvId: number | null = null;
+  private movieId: number | null = null;
   public genres: string[] = [];
   loggedInUser: any;
   commentForm = new FormGroup({
@@ -23,6 +26,7 @@ export class TvShowFullDetailsComponent implements OnInit {
   ratingForm = new FormGroup({
     rating: new FormControl('') // Campo para la calificación
   });
+  comments: any[] = [];
 
   constructor(
     private route: ActivatedRoute, // Obtener el ID de la URL
@@ -34,6 +38,7 @@ export class TvShowFullDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.tvId = Number(this.route.snapshot.paramMap.get('id'));
     this.loggedInUser = this.authService.getLoggedInUser();
+    this.loadComments();
     if (this.tvId) {
       this.getTvDetails(this.tvId);
     }
@@ -54,7 +59,7 @@ export class TvShowFullDetailsComponent implements OnInit {
   toggleLike(): void {
     if (this.tvId) {
       const index = this.loggedInUser.likes.findIndex(
-        (item: { tvId?: number; seriesId?: number }) => 
+        (item: { movieId?: number; tvId?: number }) => 
           item.tvId === this.tvId
       );
       if (index === -1) {
@@ -73,7 +78,7 @@ export class TvShowFullDetailsComponent implements OnInit {
   toggleWatchlist(): void {
     if (this.tvId) {
       const index = this.loggedInUser.watchlist.findIndex(
-        (item: { tvId?: number; seriesId?: number }) => 
+        (item: { movieId?: number; tvId?: number }) => 
           item.tvId === this.tvId
       );
       if (index === -1) {
@@ -92,7 +97,7 @@ export class TvShowFullDetailsComponent implements OnInit {
   toggleWatched(): void {
     if (this.tvId) {
       const index = this.loggedInUser.watched.findIndex(
-        (item: { tvId?: number; seriesId?: number }) => 
+        (item: { movieId?: number; tvId?: number }) => 
           item.tvId === this.tvId
       );
       if (index === -1) {
@@ -113,20 +118,63 @@ export class TvShowFullDetailsComponent implements OnInit {
         this.authService.updateLoggedInUser(updatedUser);
       });
   }
-
+  
+  loadComments(): void {
+    if (this.movieId || this.tvId) {
+      // Construir el endpoint dinámico basado en el tipo (movieId o tvId)
+      const filter = this.movieId ? `movieId=${this.movieId}` : `tvId=${this.tvId}`;
+      
+      // Hacer la solicitud HTTP con el filtro aplicado
+      this.http.get<any[]>(`http://localhost:3000/comments?${filter}`).subscribe(
+        (comments) => {
+          // Filtrar los comentarios con movieId o tvId correspondiente si la API no lo hace
+          const filteredComments = comments.filter(comment => 
+            (this.movieId && comment.movieId === this.movieId) || 
+            (this.tvId && comment.tvId === this.tvId)
+          );
+  
+          // Cargar los usuarios asociados a esos comentarios
+          const userRequests = filteredComments.map((comment) =>
+            this.http.get<any>(`http://localhost:3000/users/${comment.userId}`).pipe(
+              map((user) => ({
+                ...comment,
+                username: user.username // Agregar el username al comentario
+              }))
+            )
+          );
+  
+          // Usamos forkJoin para esperar que todos los usuarios estén listos
+          forkJoin(userRequests).subscribe(
+            (commentsWithUsers) => {
+              this.comments = commentsWithUsers; // Asignar los comentarios con usuarios
+            },
+            (error) => {
+              console.error('Error loading users for comments:', error);
+            }
+          );
+        },
+        (error) => {
+          console.error('Error loading comments:', error);
+        }
+      );
+    }
+  }
+  
   submitComment(): void {
-    if (this.tvId && this.commentForm.valid) {
+    if ((this.movieId || this.tvId) && this.commentForm.valid) {
       const comment = {
         userId: this.loggedInUser?.id,
-        tvId: this.tvId,
+        movieId: this.movieId || null, // Si no hay movieId, enviar null
+        tvId: this.tvId || null,       // Si no hay tvId, enviar null
         text: this.commentForm.value.text,
         date: new Date().toISOString()
       };
-
+  
       this.http.post('http://localhost:3000/comments', comment).subscribe(
         (response) => {
           console.log('Comment submitted:', response);
           this.commentForm.reset();
+          this.loadComments();
         },
         (error) => {
           console.error('Error submitting comment:', error);
@@ -134,6 +182,7 @@ export class TvShowFullDetailsComponent implements OnInit {
       );
     }
   }
+
 
   submitRating(): void {
     if (this.tvId && this.ratingForm.valid) {
