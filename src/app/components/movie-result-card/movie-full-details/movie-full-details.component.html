@@ -29,16 +29,16 @@
             d="M8.867 14.41c13.308-9.322 4.79-16.563.064-13.824L7 3l1.5 4-2 3L8 15a38 38 0 0 0 .867-.59m-.303-1.01-.971-3.237 1.74-2.608a1 1 0 0 0 .103-.906l-1.3-3.468 1.45-1.813c1.861-.948 4.446.002 5.197 2.11.691 1.94-.055 5.521-6.219 9.922m-1.25 1.137a36 36 0 0 1-1.522-1.116C-5.077 4.97 1.842-1.472 6.454.293c.314.12.618.279.904.477L5.5 3 7 7l-1.5 3zm-2.3-3.06-.442-1.106a1 1 0 0 1 .034-.818l1.305-2.61L4.564 3.35a1 1 0 0 1 .168-.991l1.032-1.24c-1.688-.449-3.7.398-4.456 2.128-.711 1.627-.413 4.55 3.706 8.229Z" />
         </svg>
       </button>
-    
+
       <button class="btn btn-success" (click)="toggleWatched()">
-        <svg *ngIf="isWatched()" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-eye-fill"
-          viewBox="0 0 16 16">
+        <svg *ngIf="isWatched()" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+          class="bi bi-eye-fill" viewBox="0 0 16 16">
           <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
           <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
         </svg>
 
-        <svg *ngIf="!isWatched()" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-eye-slash-fill"
-          viewBox="0 0 16 16">
+        <svg *ngIf="!isWatched()" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+          class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
           <path
             d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z" />
           <path
@@ -46,14 +46,14 @@
         </svg>
       </button>
       <button class="btn btn-warning" (click)="toggleWatchlist()">
-        <svg *ngIf="isWatchlist()" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-clock-fill"
-          viewBox="0 0 16 16">
+        <svg *ngIf="isWatchlist()" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+          class="bi bi-clock-fill" viewBox="0 0 16 16">
           <path
             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
         </svg>
 
-        <svg *ngIf="!isWatchlist()" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-clock"
-          viewBox="0 0 16 16">
+        <svg *ngIf="!isWatchlist()" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+          class="bi bi-clock" viewBox="0 0 16 16">
           <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
           <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0" />
         </svg></button>
@@ -62,14 +62,25 @@
 
     <form [formGroup]="ratingForm" (ngSubmit)="submitRating()">
       <input type="number" formControlName="rating" min="1" max="10" step="1" />
-      <button type="submit" class="btn btn-primary">Calificar</button>
+      <button type="submit" class="btn btn-sm btn-primary">Calificar</button>
     </form>
   </div>
 
-  <div>
-    <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
-      <textarea formControlName="text" class="form-control" ></textarea>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+  <div class="comments-section">
+    <h3>Comentarios</h3>
+    <!-- Lista de comentarios -->
+    <div *ngFor="let comment of comments" class="">
+      <p><strong>{{ comment.username }}</strong>: {{ comment.text }}</p>
+      <small>{{ comment.date | date: 'short' }}</small>
+    </div>
+    <div *ngIf="comments.length === 0">
+      <p>No hay comentarios para esta película.</p>
+    </div>
+    <div>
+      <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+        <textarea formControlName="text" class="form-control"></textarea>
+        <button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">Comentar</button>
+      </form>
+    </div>
   </div>
 </div>
