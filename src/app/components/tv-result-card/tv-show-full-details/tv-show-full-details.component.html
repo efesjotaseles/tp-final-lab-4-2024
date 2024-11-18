@@ -2,7 +2,7 @@
     <h1 class="text-center mb-4" style="font-size: 3rem;">{{ tvDetails?.name }}</h1>
     
     <div class="row">
-      <div class="col-md-4 d-flex justify-content-center">
+      <div class="col-md-4 d-flex justify-content-left mb-3">
         <img 
           [src]="'https://image.tmdb.org/t/p/w500' + tvDetails?.poster_path" 
           alt="{{ tvDetails?.name }}" 
@@ -69,7 +69,9 @@
   
       <form [formGroup]="ratingForm" (ngSubmit)="submitRating()">
         <input type="number" formControlName="rating" min="1" max="10" step="1" />
-        <button type="submit" class="btn btn-primary">Calificar</button>
+        <button type="submit" class="btn btn-primary">
+          {{ ratingForm.value.rating ? 'Actualizar Calificación' : 'Calificar' }}
+        </button>
       </form>
     </div>
   

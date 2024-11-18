@@ -8,6 +8,7 @@
       "lastname": "",
       "email": "",
       "avatar": "",
+      "admin": true,
       "likes": [
         {
           "movieId": null,
@@ -41,6 +42,10 @@
         {
           "movieId": 8966,
           "tvId": null
+        },
+        {
+          "movieId": null,
+          "tvId": 194764
         }
       ],
       "watched": [
@@ -129,15 +134,53 @@
       "tvId": 90228,
       "text": "PRUEBA",
       "date": "2024-11-18T07:52:45.825Z"
+    },
+    {
+      "id": "6bd3",
+      "userId": "2",
+      "movieId": null,
+      "tvId": 194764,
+      "text": "prueba Pingüino",
+      "date": "2024-11-18T11:53:18.572Z"
+    },
+    {
+      "id": "62fa",
+      "userId": "2",
+      "movieId": null,
+      "tvId": 157741,
+      "text": "prueba landman",
+      "date": "2024-11-18T12:17:02.824Z"
+    },
+    {
+      "id": "27b2",
+      "userId": "2",
+      "movieId": null,
+      "tvId": 1668,
+      "text": "friends\n",
+      "date": "2024-11-18T13:53:31.402Z"
     }
   ],
   "ratings": [
     {
-      "id": "1",
-      "userId": "2",
-      "number": 9,
-      "movieId": 675,
-      "tvId": null
+      "idUser": "2",
+      "movieId": null,
+      "tvId": 1668,
+      "number": 6,
+      "id": "1"
+    },
+    {
+      "idUser": "2",
+      "movieId": 674,
+      "tvId": null,
+      "number": 8,
+      "id": "596a"
+    },
+    {
+      "id": "cd65",
+      "idUser": "2",
+      "movieId": 673,
+      "tvId": null,
+      "number": 7
     }
   ]
 }
