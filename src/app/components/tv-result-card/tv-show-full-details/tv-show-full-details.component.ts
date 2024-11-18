@@ -22,11 +22,7 @@ export class TvShowFullDetailsComponent implements OnInit {
   commentForm = new FormGroup({
     text: new FormControl('')
   });
-  ratingForm = new FormGroup({
-    rating: new FormControl('') // Campo para la calificación
-  });
   comments: any[] = [];
-  ratings: any[] = [];
 
   constructor(
     private route: ActivatedRoute, // Obtener el ID de la URL
@@ -39,7 +35,6 @@ export class TvShowFullDetailsComponent implements OnInit {
     this.tvId = Number(this.route.snapshot.paramMap.get('id'));
     this.loggedInUser = this.authService.getLoggedInUser();
     this.loadComments();
-    this.loadRatingToEdit();
     if (this.tvId) {
       this.getTvDetails(this.tvId);
     }
@@ -183,105 +178,5 @@ export class TvShowFullDetailsComponent implements OnInit {
       );
     }
   }
-  loadRatings(): void {
-    if (this.tvId) {
-      const filter = `tvId=${this.tvId}`;
-  
-      this.http.get<any[]>(`http://localhost:3000/ratings?${filter}`).subscribe(
-        (ratings) => {
-          const userRequests = ratings.map((rating) =>
-            this.http.get<any>(`http://localhost:3000/users/${rating.idUser}`).pipe(
-              map((user) => ({
-                ...rating,
-                username: user.username // Agregar el username a la calificación
-              }))
-            )
-          );
-  
-          forkJoin(userRequests).subscribe(
-            (ratingsWithUsers) => {
-              this.ratings = ratingsWithUsers; // Asignamos las calificaciones con usuarios
-            },
-            (error) => {
-              console.error('Error loading users for ratings:', error);
-            }
-          );
-        },
-        (error) => {
-          console.error('Error loading ratings:', error);
-        }
-      );
-    }
-  }
-
-  // Método para enviar la calificación
-  submitRating(): void {
-    if (this.tvId && this.ratingForm.valid) {
-      const rating = {
-        idUser: this.loggedInUser?.id,  // ID del usuario que califica
-        movieId: null,                   // No usaremos movieId para TV
-        tvId: this.tvId,                 // Usamos tvId
-        number: this.ratingForm.value.rating  // La calificación numérica
-      };
-  
-      // Verificamos si ya existe una calificación para esta serie (tvId) por parte de este usuario
-      const existingRatingFilter = `tvId=${this.tvId}&idUser=${this.loggedInUser?.id}`;
-  
-      this.http.get<any[]>(`http://localhost:3000/ratings?${existingRatingFilter}`).subscribe(
-        (ratings) => {
-          if (ratings.length > 0) {
-            // Si ya existe una calificación, la actualizamos
-            const ratingId = ratings[0].id;  // Asumimos que solo hay una calificación por item
-            this.http.put(`http://localhost:3000/ratings/${ratingId}`, rating).subscribe(
-              (response) => {
-                console.log('Rating updated:', response);
-                this.ratingForm.reset();
-                this.loadRatings();  // Volver a cargar las calificaciones
-              },
-              (error) => {
-                console.error('Error updating rating:', error);
-              }
-            );
-          } else {
-            // Si no existe una calificación, la creamos
-            this.http.post('http://localhost:3000/ratings', rating).subscribe(
-              (response) => {
-                console.log('Rating submitted:', response);
-                this.ratingForm.reset();
-                this.loadRatings();  // Volver a cargar las calificaciones
-              },
-              (error) => {
-                console.error('Error submitting rating:', error);
-              }
-            );
-          }
-        },
-        (error) => {
-          console.error('Error checking existing ratings:', error);
-        }
-      );
-    }
-  }
-
-  loadRatingToEdit(): void {
-    if (this.movieId || this.tvId) {
-      // Construimos el filtro dependiendo de si es movieId o tvId
-      const filter = this.movieId ? `movieId=${this.movieId}` : `tvId=${this.tvId}`;
-  
-      // Consultamos si el usuario ya tiene una calificación para esta película o serie
-      this.http.get<any[]>(`http://localhost:3000/ratings?${filter}&idUser=${this.loggedInUser?.id}`).subscribe(
-        (ratings) => {
-          if (ratings.length > 0) {
-            const existingRating = ratings[0];  // Solo esperamos una calificación por item
-            this.ratingForm.patchValue({
-              rating: existingRating.number // Llenamos el formulario con la calificación existente
-            });
-          }
-        },
-        (error) => {
-          console.error('Error loading rating to edit:', error);
-        }
-      );
-    }
-  }
+    
 }

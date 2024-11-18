@@ -159,28 +159,5 @@
       "text": "friends\n",
       "date": "2024-11-18T13:53:31.402Z"
     }
-  ],
-  "ratings": [
-    {
-      "idUser": "2",
-      "movieId": null,
-      "tvId": 1668,
-      "number": 6,
-      "id": "1"
-    },
-    {
-      "idUser": "2",
-      "movieId": 674,
-      "tvId": null,
-      "number": 8,
-      "id": "596a"
-    },
-    {
-      "id": "cd65",
-      "idUser": "2",
-      "movieId": 673,
-      "tvId": null,
-      "number": 7
-    }
   ]
 }
