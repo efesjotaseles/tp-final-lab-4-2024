@@ -36,24 +36,23 @@ export class PeliculasComponent {
   };
 
   ngOnInit(): void {
-    // Obtener las películas trending al cargar el componente
+  
     this.tmdbService.getTrendingMovies().subscribe((data: any) => {
       this.trendingMovies = data.results.slice(0, 10);
-      this.initializeCarousel(); // Inicializar el carrusel al obtener los datos
+      this.initializeCarousel(); 
     });
   }
 
   ngAfterViewInit(): void {
-    this.initializeCarousel(); // Inicializar el carrusel después de cargar la vista
+    this.initializeCarousel(); 
   }
 
   private initializeCarousel(): void {
-    // Obtener el elemento del carrusel por ID y crear una instancia de Bootstrap
     const carouselElement = this.el.nativeElement.querySelector('#trendingCarousel');
     if (carouselElement) {
       new bootstrap.Carousel(carouselElement, {
-        interval: 5000, // Cambiar cada 5 segundos
-        ride: 'carousel', // Para iniciar automáticamente
+        interval: 5000, 
+        ride: 'carousel', 
       });
     }
   }
@@ -66,7 +65,6 @@ export class PeliculasComponent {
       .searchMovies(this.movieSearchForm.movieQueryParams)
       .subscribe({
         next: (response) => {
-          //Filter before...
           if (
             movieSearchForm.genre !== null &&
             movieSearchForm.genre !== undefined

@@ -21,7 +21,6 @@ export class SignUpComponent {
   confirmPassword: string = '';
 
 
-  //constructor(private authService: AuthService) {}
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,

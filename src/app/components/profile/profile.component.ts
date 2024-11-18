@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private tmdbService: TmdbService,
-    private router: Router // Inyectamos el Router
+    private router: Router 
   ) {}
 
   ngOnInit(): void {

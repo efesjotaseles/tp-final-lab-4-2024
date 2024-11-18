@@ -1,4 +1,3 @@
-// tv-show-full-details.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TmdbService } from '../../../services/tmdb.service';
@@ -16,7 +15,7 @@ export class TvShowFullDetailsComponent implements OnInit {
   public genres: string[] = [];
 
   constructor(
-    private route: ActivatedRoute, // Obtener el ID de la URL
+    private route: ActivatedRoute, 
     private tmdbService: TmdbService
   ) {}
 

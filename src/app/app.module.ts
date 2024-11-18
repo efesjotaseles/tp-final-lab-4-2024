@@ -13,7 +13,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { PeliculasComponent } from './components/peliculas/peliculas.component';
 import { SeriesComponent } from './components/series/series.component';
-import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchModule } from './search/search.module';
 import { MovieResultCardComponent } from './components/movie-result-card/movie-result-card.component';
@@ -39,7 +38,6 @@ import { SettingsComponent } from './components/settings/settings.component';
     HomeComponent,
     PeliculasComponent,
     SeriesComponent,
-    BusquedaComponent,
     MovieResultCardComponent,
     MovieResultListComponent,
     PaginationComponent,

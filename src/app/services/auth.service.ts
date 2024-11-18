@@ -19,7 +19,7 @@ export class AuthService {
         if (users.length > 0) {
           const user = users[0];
           localStorage.setItem('loggedInUser', JSON.stringify(user));
-          this.loggedInUserSubject.next(user);  // Actualiza el BehaviorSubject
+          this.loggedInUserSubject.next(user); 
           return true;
         }
         return false;
@@ -45,7 +45,6 @@ export class AuthService {
   register(newUser: any): Observable<any> {
     return this.http.get<any[]>(this.apiUrl).pipe(
       map(users => {
-        // Buscar el mayor id actual y asignar el nuevo id
         const maxId = users.reduce((max, user) => (user.id > max ? user.id : max), 0);
         const fullUser = {
           ...newUser,
@@ -96,9 +95,7 @@ export class AuthService {
   }
 
   updateLoggedInUser(updatedUser: any): void {
-    // Actualiza el BehaviorSubject
     this.loggedInUserSubject.next(updatedUser);
-    // Actualiza el usuario en localStorage
     localStorage.setItem('loggedInUser', JSON.stringify(updatedUser));
   }
 
@@ -119,7 +116,6 @@ export class AuthService {
   addRating(userId: number, rating: { id: number, movieId: number, number: number }): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${userId}`).pipe(
       switchMap(user => {
-        // Si ya tiene ratings, lo agregamos al array. Si no, lo inicializamos.
         const updatedRatings = user.rating ? [...user.rating, rating] : [rating];
         return this.http.patch(`${this.apiUrl}/${userId}`, { rating: updatedRatings });
       })

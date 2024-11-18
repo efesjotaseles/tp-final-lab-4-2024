@@ -30,27 +30,8 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();  // Llamamos al método logout del AuthService
+    this.authService.logout(); 
     this.router.navigate(['/login']);
   }
-  // loadUser() {
-  //   const user = localStorage.getItem('loggedInUser');
-  //   if (user) {
-  //     try {
-  //       this.loggedInUser = JSON.parse(user);
-  //       console.log(this.loggedInUser);
-  //     } catch (e) {
-  //       console.error('Error al parsear el usuario desde localStorage', e);
-  //       this.loggedInUser = null;
-  //     }
-  //   } else {
-  //     this.loggedInUser = null;
-  //   }
-  // }
-  // logout() {
-  //   this.authService.logout();
-  //   localStorage.removeItem('loggedInUser');
-  //   this.router.navigate(['/login']);
-  // }
 
 }

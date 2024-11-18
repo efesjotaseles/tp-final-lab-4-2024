@@ -22,7 +22,7 @@ export class MovieFullDetailsComponent implements OnInit {
     text: new FormControl('')
   });
   ratingForm = new FormGroup({
-    rating: new FormControl('') // Campo para la calificación
+    rating: new FormControl('') 
   });
 
   constructor(
@@ -47,13 +47,6 @@ export class MovieFullDetailsComponent implements OnInit {
     });
   }
 
-  // addToLikes(): void {
-  //   if (this.loggedInUser && this.movieId) {
-  //     this.loggedInUser.likes.push(this.movieId);
-  //     this.updateUserData();
-  //   }
-  // }
-
   isLiked(): boolean {
     return this.loggedInUser?.likes.includes(this.movieId);
   }
@@ -62,9 +55,9 @@ export class MovieFullDetailsComponent implements OnInit {
     if (this.movieId) {
       const index = this.loggedInUser.likes.indexOf(this.movieId);
       if (index === -1) {
-        this.loggedInUser.likes.push(this.movieId); // Agrega a la lista de me gusta
+        this.loggedInUser.likes.push(this.movieId); 
       } else {
-        this.loggedInUser.likes.splice(index, 1); // Elimina de la lista de me gusta
+        this.loggedInUser.likes.splice(index, 1); 
       }
       this.updateUserData();
     }
@@ -78,9 +71,9 @@ export class MovieFullDetailsComponent implements OnInit {
     if (this.movieId) {
       const index = this.loggedInUser.watchlist.indexOf(this.movieId);
       if (index === -1) {
-        this.loggedInUser.watchlist.push(this.movieId); // Agrega a la lista de me gusta
+        this.loggedInUser.watchlist.push(this.movieId); 
       } else {
-        this.loggedInUser.watchlist.splice(index, 1); // Elimina de la lista de me gusta
+        this.loggedInUser.watchlist.splice(index, 1); 
       }
       this.updateUserData();
     }
@@ -94,9 +87,9 @@ export class MovieFullDetailsComponent implements OnInit {
     if (this.movieId) {
       const index = this.loggedInUser.watched.indexOf(this.movieId);
       if (index === -1) {
-        this.loggedInUser.watched.push(this.movieId); // Agrega a la lista de me gusta
+        this.loggedInUser.watched.push(this.movieId); 
       } else {
-        this.loggedInUser.watched.splice(index, 1); // Elimina de la lista de me gusta
+        this.loggedInUser.watched.splice(index, 1); 
       }
       this.updateUserData();
     }
@@ -157,9 +150,9 @@ export class MovieFullDetailsComponent implements OnInit {
         ? Math.max(...currentRatings.map(rating => parseInt(rating.id, 10) || 0)) + 1
         : 1;
       const rating: any = {
-        id: nextRatingId, // Genera un ID único para la calificación
+        id: nextRatingId, 
         movieId: Number(movieId),
-        number: ratingNumber, // Asegúrate de que el número sea un tipo number
+        number: ratingNumber, 
       };
 
       this.authService.addRating(userId, rating).subscribe(

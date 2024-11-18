@@ -59,7 +59,6 @@ export class SeriesComponent {
       .searchTv(this.tvSearchForm.tvQueryParams)
       .subscribe({
         next: (response) => {
-          //Filter before...
           if (
             tvSearchForm.genre !== null &&
             tvSearchForm.genre !== undefined

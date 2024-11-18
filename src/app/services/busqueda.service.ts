@@ -9,6 +9,6 @@ export class BusquedaService {
   buscado$ = this.valorBuscadoSource.asObservable();
 
   actualizarBusqueda(valor: string) {
-    this.valorBuscadoSource.next(valor); // Actualiza el valor buscado
+    this.valorBuscadoSource.next(valor);
   }
 }

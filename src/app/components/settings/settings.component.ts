@@ -32,8 +32,8 @@ export class SettingsComponent implements OnInit {
         loggedInUser.name || '',
         [Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúñ\s]+$/)],
       ],
-      lastname: [ // Cambiar "lastName" a "lastname"
-        loggedInUser.lastname || '', // Cambiar "loggedInUser.lastName" a "loggedInUser.lastname"
+      lastname: [ 
+        loggedInUser.lastname || '',
         [Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúñ\s]+$/)],
       ],
       email: [
@@ -79,7 +79,6 @@ export class SettingsComponent implements OnInit {
         this.success = false;
       }
 
-      // Limpiar mensaje después de 5 segundos
       setTimeout(() => {
         this.message = '';
       }, 5000);

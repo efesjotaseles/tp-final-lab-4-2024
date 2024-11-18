@@ -40,7 +40,6 @@ export class HomeComponent {
   public isSearchPerformed = false;
 
   ngOnInit(): void {
-    // Cargar las películas y series en tendencia
     this.tmdbService.getTrendingMovies().subscribe((data: any) => {
       this.trendingMovies = data.results.slice(0, 10);
       this.initializeCarousel('trendingMoviesCarousel');
@@ -53,7 +52,6 @@ export class HomeComponent {
   }
 
   ngAfterViewInit(): void {
-    // Inicializar ambos carruseles
     this.initializeCarousel('trendingMoviesCarousel');
     this.initializeCarousel('trendingTvCarousel');
   }
