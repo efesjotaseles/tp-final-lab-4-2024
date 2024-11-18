@@ -8,12 +8,23 @@
         alt="Poster" 
         class="img-fluid rounded" 
         style="width: 100px;"
+        (click)="handleShowFullDetails(movie.id)"
       >
-      <button 
-        class="btn btn-primary btn-sm mt-2" 
-        (click)="handleShowFullDetails(movie.id)">
-        Show full details
-      </button>
+    </div>
+  </div>
+</div>
+
+<p>Series que te gustaron:</p>
+<div class="d-flex overflow-auto gap-2 mb-3">
+  <div *ngFor="let tv of likedTvShows" class="flex-shrink-0 text-center">
+    <div class="d-flex flex-column align-items-center">
+      <img 
+        [src]="'https://image.tmdb.org/t/p/w200' + tv.poster_path" 
+        alt="Poster" 
+        class="img-fluid rounded" 
+        style="width: 100px;"
+        (click)="handleShowFullDetailsTv(tv.id)"
+      >
     </div>
   </div>
 </div>
@@ -28,12 +39,24 @@
         alt="Poster" 
         class="img-fluid rounded" 
         style="width: 100px;"
+        (click)="handleShowFullDetails(movie.id)"
       >
-      <button 
-        class="btn btn-primary btn-sm mt-2" 
-        (click)="handleShowFullDetails(movie.id)">
-        Show full details
-      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Películas vistas -->
+<p>Series vistas:</p>
+<div class="d-flex overflow-auto gap-2 mb-3">
+  <div *ngFor="let tv of watchedTvShows" class="flex-shrink-0 text-center">
+    <div class="d-flex flex-column align-items-center">
+      <img 
+        [src]="'https://image.tmdb.org/t/p/w200' + tv.poster_path" 
+        alt="Poster" 
+        class="img-fluid rounded" 
+        style="width: 100px;"
+        (click)="handleShowFullDetailsTv(tv.id)"
+      >
     </div>
   </div>
 </div>
@@ -48,12 +71,24 @@
         alt="Poster" 
         class="img-fluid rounded" 
         style="width: 100px;"
+        (click)="handleShowFullDetails(movie.id)"
       >
-      <button 
-        class="btn btn-primary btn-sm mt-2" 
-        (click)="handleShowFullDetails(movie.id)">
-        Show full details
-      </button>
+    </div>
+  </div>
+</div>
+
+
+<p>Series para ver:</p>
+<div class="d-flex overflow-auto gap-2">
+  <div *ngFor="let tv of watchlistTvShows" class="flex-shrink-0 text-center">
+    <div class="d-flex flex-column align-items-center">
+      <img 
+        [src]="'https://image.tmdb.org/t/p/w200' + tv.poster_path" 
+        alt="Poster" 
+        class="img-fluid rounded" 
+        style="width: 100px;"
+        (click)="handleShowFullDetailsTv(tv.id)"
+      >
     </div>
   </div>
 </div>
