@@ -1,1 +1,95 @@
-<p>settings works!</p>
+<div class="settings-container">
+    <h2>Configuración de cuenta</h2>
+    <form [formGroup]="settingsForm" (ngSubmit)="updateSettings()">
+      <!-- Nombre -->
+      <div class="form-group">
+        <label for="name">Nombre:</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          formControlName="name"
+          [ngClass]="{'is-invalid': settingsForm.get('name')?.invalid && settingsForm.get('name')?.touched}"
+        />
+        <div *ngIf="settingsForm.get('name')?.invalid && settingsForm.get('name')?.touched" class="invalid-feedback">
+          <span *ngIf="settingsForm.get('name')?.errors?.['required']">El nombre es obligatorio.</span>
+          <span *ngIf="settingsForm.get('name')?.errors?.['pattern']">El nombre solo debe contener letras y espacios.</span>
+        </div>
+      </div>
+  
+      <!-- Apellido -->
+      <div class="form-group">
+        <label for="lastname">Apellido:</label>
+        <input
+        type="text"
+        id="lastname"
+        class="form-control"
+        formControlName="lastname" 
+        [ngClass]="{'is-invalid': settingsForm.get('lastname')?.invalid && settingsForm.get('lastname')?.touched}"
+      />
+      
+        <div *ngIf="settingsForm.get('lastname')?.invalid && settingsForm.get('lastname')?.touched" class="invalid-feedback">
+          <span *ngIf="settingsForm.get('lastname')?.errors?.['required']">El apellido es obligatorio.</span>
+          <span *ngIf="settingsForm.get('lastname')?.errors?.['pattern']">El apellido solo debe contener letras y espacios.</span>
+        </div>
+      </div>
+  
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          formControlName="email"
+          [ngClass]="{'is-invalid': settingsForm.get('email')?.invalid && settingsForm.get('email')?.touched}"
+        />
+        <div *ngIf="settingsForm.get('email')?.invalid && settingsForm.get('email')?.touched" class="invalid-feedback">
+          <span *ngIf="settingsForm.get('email')?.errors?.['required']">El email es obligatorio.</span>
+          <span *ngIf="settingsForm.get('email')?.errors?.['email']">Formato de email inválido.</span>
+          <span *ngIf="settingsForm.get('email')?.errors?.['pattern']">El email debe terminar en ".com".</span>
+          <span *ngIf="settingsForm.get('email')?.errors?.['emailExists']">El email ya está registrado.</span>
+        </div>
+      </div>
+  
+      <!-- Contraseña actual -->
+      <div class="form-group">
+        <label for="currentPassword">Contraseña actual:</label>
+        <input
+          type="password"
+          id="currentPassword"
+          class="form-control"
+          formControlName="currentPassword"
+          [ngClass]="{'is-invalid': settingsForm.get('currentPassword')?.invalid && settingsForm.get('currentPassword')?.touched}"
+        />
+        <div *ngIf="settingsForm.get('currentPassword')?.invalid && settingsForm.get('currentPassword')?.touched" class="invalid-feedback">
+          <span *ngIf="settingsForm.get('currentPassword')?.errors?.['required']">La contraseña actual es obligatoria.</span>
+          <span *ngIf="settingsForm.get('currentPassword')?.errors?.['incorrectPassword']">La contraseña actual no coincide.</span>
+        </div>
+      </div>
+  
+      <!-- Nueva contraseña -->
+      <div class="form-group">
+        <label for="password">Nueva contraseña:</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          formControlName="password"
+          [ngClass]="{'is-invalid': settingsForm.get('password')?.invalid && settingsForm.get('password')?.touched}"
+        />
+        <div *ngIf="settingsForm.get('password')?.invalid && settingsForm.get('password')?.touched" class="invalid-feedback">
+          <span *ngIf="settingsForm.get('password')?.errors?.['required']">La nueva contraseña es obligatoria.</span>
+          <span *ngIf="settingsForm.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 4 caracteres.</span>
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="settingsForm.invalid">Guardar cambios</button>
+    </form>
+  
+    <!-- Mensaje de confirmación -->
+    <div *ngIf="message" class="mt-3 alert" [class.alert-success]="success" [class.alert-danger]="!success">
+      {{ message }}
+    </div>
+  </div>
+  
